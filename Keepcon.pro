@@ -7,7 +7,7 @@
 QT += core
 QT += gui
 
-TARGET = Prueba2
+TARGET = Keepcon
 CONFIG += console
 CONFIG -= app_bundle
 

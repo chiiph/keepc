@@ -99,8 +99,8 @@ float ImageFuncs::rms(IplImage* img1, IplImage* img2){
 			for(int k=0; k<channels; k++){
 				chanAcc += pow((data1[i*step + j*channels + k] - data2[i*step + j*channels + k]), 2);
 			}
-			//pixAcc += sqr(sqrt(chanAcc));
-			pixAcc += chanAcc;
+			pixAcc += sqr(sqrt(chanAcc));
+			//pixAcc += chanAcc;
 		}
 	}
 	rms = sqrt(pixAcc / (width * height));
@@ -108,4 +108,3 @@ float ImageFuncs::rms(IplImage* img1, IplImage* img2){
 
 	//sqrt((distancia(pixel1.1,pixel2.1)^2 + distancia(pixel1.2,pixel2.2)^2 + ... + distancia(pixel1.N,pixel2.N)^2)/N)
 }
-
