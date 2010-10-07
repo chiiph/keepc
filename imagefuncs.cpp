@@ -99,7 +99,7 @@ float ImageFuncs::rms(IplImage* img1, IplImage* img2){
 			for(int k=0; k<channels; k++){
 				chanAcc += pow((data1[i*step + j*channels + k] - data2[i*step + j*channels + k]), 2);
 			}
-			pixAcc += sqr(sqrt(chanAcc));
+			pixAcc += pow(sqrt(chanAcc), 2);
 			//pixAcc += chanAcc;
 		}
 	}
