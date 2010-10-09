@@ -89,9 +89,11 @@ float ImageFuncs::rms(IplImage* img1, IplImage* img2){
 	int width = img1->width;
 	int step = img1->widthStep;
 	int channels = img1->nChannels;
+	float dist;
 	float chanAcc = 0;
 	float pixAcc = 0;
 	float rms = 0;
+	float maxDist = 0;
 
 	for(int i=0; i<height; i++){
 		for(int j=0; j<width; j++){
@@ -99,11 +101,15 @@ float ImageFuncs::rms(IplImage* img1, IplImage* img2){
 			for(int k=0; k<channels; k++){
 				chanAcc += pow((data1[i*step + j*channels + k] - data2[i*step + j*channels + k]), 2);
 			}
-			pixAcc += pow(sqrt(chanAcc), 2);
-			//pixAcc += chanAcc;
+			dist = sqrt(chanAcc);
+			if(dist > 0) dist = log10(dist);
+			if(dist > maxDist) maxDist = dist;
+			pixAcc += pow(dist, 2);
 		}
 	}
 	rms = sqrt(pixAcc / (width * height));
+	cout << "Máxima distancia: " << maxDist << endl;
+	if(maxDist != 0) rms = rms / maxDist;
 	return rms;
 
 	//sqrt((distancia(pixel1.1,pixel2.1)^2 + distancia(pixel1.2,pixel2.2)^2 + ... + distancia(pixel1.N,pixel2.N)^2)/N)

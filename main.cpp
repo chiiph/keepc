@@ -36,18 +36,18 @@ int main(int argc, char *argv[]){
 
 	funcs->ratioResize(img1, img2);
 
-	/*
+
 	cvNamedWindow("win1", CV_WINDOW_AUTOSIZE);
 	cvMoveWindow("win1", 100, 100);
 	cvShowImage("win1", img1);
 	cvNamedWindow("win2", CV_WINDOW_AUTOSIZE);
 	cvMoveWindow("win2", 150, 150);
 	cvShowImage("win2", img2);
-	*/
 
-	cout << "RMS = " << funcs->rms(img1, img2) << endl << endl;
 
-	//cvWaitKey(0);
+	cout << "RMS: " << funcs->rms(img1, img2) << endl << endl;
+
+	cvWaitKey(0);
 	cvReleaseImage(&img1);
 	cvReleaseImage(&img2);
 
