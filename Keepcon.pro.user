@@ -91,8 +91,9 @@
     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4RunConfiguration</value>
     <value key="Qt4ProjectManager.Qt4RunConfiguration.BaseEnvironmentBase" type="int">2</value>
     <valuelist key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments" type="QVariantList">
-     <value type="QString">/media/Datos/Proyectos/Qt/img/sound_break.jpg</value>
      <value type="QString">/media/Datos/Proyectos/Qt/img/fall.jpg</value>
+     <value type="QString">/media/Datos/Proyectos/Qt/img/buggy.jpg</value>
+     <value type="QString">-v</value>
     </valuelist>
     <value key="Qt4ProjectManager.Qt4RunConfiguration.ProFile" type="QString">Keepcon.pro</value>
     <value key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix" type="bool">false</value>

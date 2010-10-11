@@ -5,9 +5,11 @@
 
 class ImageFuncs{
 
+	int VERBOSE;
+
 public:
 
-    ImageFuncs();
+	ImageFuncs(int verbose=false);
 
 	void crop(IplImage* &img, CvRect roi);
 
