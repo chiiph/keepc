@@ -1,117 +1,468 @@
 <!DOCTYPE QtCreatorProject>
 <qtcreator>
  <data>
-  <variable>ProjectExplorer.Project.ActiveTarget</variable>
+  <variable>RunConfiguration0-BaseEnvironmentBase</variable>
+  <value type="int">2</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-CommandLineArguments</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>RunConfiguration0-ProFile</variable>
+  <value type="QString">Keepcon.pro</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-RunConfiguration.name</variable>
+  <value type="QString">Keepcon</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UseDyldImageSuffix</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UseTerminal</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UserEnvironmentChanges</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UserSetName</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UserSetWorkingDirectory</variable>
+  <value type="bool">false</value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-UserWorkingDirectory</variable>
+  <value type="QString"></value>
+ </data>
+ <data>
+  <variable>RunConfiguration0-type</variable>
+  <value type="QString">Qt4ProjectManager.Qt4RunConfiguration</value>
+ </data>
+ <data>
+  <variable>activeRunConfiguration</variable>
   <value type="int">0</value>
  </data>
  <data>
-  <variable>ProjectExplorer.Project.EditorSettings</variable>
+  <variable>activebuildconfiguration</variable>
+  <value type="QString">Release</value>
+ </data>
+ <data>
+  <variable>buildConfiguration-Debug</variable>
   <valuemap type="QVariantMap">
-   <value key="EditorConfiguration.Codec" type="QByteArray">System</value>
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <value key="QtVersionId" type="int">0</value>
+   <value key="ToolChain" type="int">2</value>
+   <value key="addQDumper" type=""></value>
+   <value key="buildConfiguration" type="int">10</value>
   </valuemap>
  </data>
  <data>
-  <variable>ProjectExplorer.Project.Target.0</variable>
+  <variable>buildConfiguration-Release</variable>
   <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Desktop</value>
-   <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Target.DesktopTarget</value>
-   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
-   <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
-   <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
-     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
-    </valuemap>
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">2</value>
-    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
-      <value type="QString">clean</value>
-     </valuelist>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
-    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
-    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
-    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Debug</value>
-    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">2</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/media/Datos/Proyectos/Qt/Prueba2-build-desktop</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">2</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">false</value>
-   </valuemap>
-   <valuemap key="ProjectExplorer.Target.BuildConfiguration.1" type="QVariantMap">
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">qmake</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">QtProjectManager.QMakeBuildStep</value>
-     <valuelist key="QtProjectManager.QMakeBuildStep.QMakeArguments" type="QVariantList"/>
-    </valuemap>
-    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.1" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">false</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList"/>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">2</value>
-    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
-     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
-     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.MakeStep</value>
-     <value key="Qt4ProjectManager.MakeStep.Clean" type="bool">true</value>
-     <valuelist key="Qt4ProjectManager.MakeStep.MakeArguments" type="QVariantList">
-      <value type="QString">clean</value>
-     </valuelist>
-     <value key="Qt4ProjectManager.MakeStep.MakeCommand" type="QString"></value>
-    </valuemap>
-    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
-    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
-    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
-    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Release</value>
-    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4BuildConfiguration</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory" type="QString">/media/Datos/Proyectos/Qt/Prueba2-build-desktop</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId" type="int">2</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.ToolChain" type="int">0</value>
-    <value key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild" type="bool">true</value>
-   </valuemap>
-   <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">2</value>
-   <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
-    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Keepcon</value>
-    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">Qt4ProjectManager.Qt4RunConfiguration</value>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.BaseEnvironmentBase" type="int">2</value>
-    <valuelist key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments" type="QVariantList">
-     <value type="QString">/media/Datos/Proyectos/Qt/img/fall.jpg</value>
-     <value type="QString">/media/Datos/Proyectos/Qt/img/buggy.jpg</value>
-     <value type="QString">-v</value>
-    </valuelist>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.ProFile" type="QString">Keepcon.pro</value>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix" type="bool">false</value>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal" type="bool">false</value>
-    <valuelist key="Qt4ProjectManager.Qt4RunConfiguration.UserEnvironmentChanges" type="QVariantList"/>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetName" type="bool">false</value>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserSetWorkingDirectory" type="bool">false</value>
-    <value key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory" type="QString"></value>
-   </valuemap>
-   <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <value key="QtVersionId" type="int">0</value>
+   <value key="ToolChain" type="int">2</value>
+   <value key="addQDumper" type=""></value>
+   <value key="buildConfiguration" type="int">8</value>
   </valuemap>
  </data>
  <data>
-  <variable>ProjectExplorer.Project.TargetCount</variable>
-  <value type="int">1</value>
+  <variable>buildconfiguration-Debug-buildstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">E:/Proyectos/Qt/win/Keepcon/Keepcon.pro</value>
+    <value type="QString">-spec</value>
+    <value type="QString">win32-g++</value>
+    <value type="QString">-r</value>
+    <value type="QString">CONFIG+=debug_and_release</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">c:/qt/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <valuelist key="qmakeArgs" type="QVariantList"/>
+  </valuemap>
  </data>
  <data>
-  <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
-  <value type="int">4</value>
+  <variable>buildconfiguration-Debug-buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">debug</value>
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <valuelist key="makeargs" type="QVariantList">
+    <value type="QString">debug</value>
+   </valuelist>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Debug-cleanstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">clean</value>
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="cleanConfig" type="bool">true</value>
+   <valuelist key="makeargs" type="QVariantList">
+    <value type="QString">clean</value>
+   </valuelist>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Release-buildstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">E:/Proyectos/Qt/win/Keepcon/Keepcon.pro</value>
+    <value type="QString">-spec</value>
+    <value type="QString">win32-g++</value>
+    <value type="QString">-r</value>
+    <value type="QString">CONFIG+=debug_and_release</value>
+    <value type="QString">CONFIG+=release</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">c:/qt/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <valuelist key="qmakeArgs" type="QVariantList"/>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Release-buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">release</value>
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <valuelist key="makeargs" type="QVariantList">
+    <value type="QString">release</value>
+   </valuelist>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Release-cleanstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Chango\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=CHANGODELL</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Chango</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\CHANGODELL</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Chango\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=CHANGODELL</value>
+    <value type="QString">USERNAME=Chango</value>
+    <value type="QString">USERPROFILE=C:\Users\Chango</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">clean</value>
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="cleanConfig" type="bool">true</value>
+   <valuelist key="makeargs" type="QVariantList">
+    <value type="QString">clean</value>
+   </valuelist>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfigurations</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">Debug</value>
+   <value type="QString">Release</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>buildstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
+   <value key="mkspec" type="QString"></value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildsteps</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">trolltech.qt4projectmanager.qmake</value>
+   <value type="QString">trolltech.qt4projectmanager.make</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>cleanstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
+   <value key="clean" type="bool">true</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>cleansteps</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">trolltech.qt4projectmanager.make</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>defaultFileEncoding</variable>
+  <value type="QByteArray">UTF-8</value>
+ </data>
+ <data>
+  <variable>project</variable>
+  <valuemap type="QVariantMap"/>
  </data>
 </qtcreator>
