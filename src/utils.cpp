@@ -2,56 +2,53 @@
 
 bool Utils::VERBOSE = false;
 
-void Utils::setVerbose(bool verbose){
+void Utils::setVerbose(bool verbose)
+{
     VERBOSE = verbose;
 }
 
-void Utils::loadImages(char* path1, char* path2, IplImage* &img1, IplImage* &img2, bool GRAYSCALE){
+void Utils::loadImages(char* path1, char* path2, IplImage* &img1, IplImage* &img2, bool GRAYSCALE)
+{
     bool gif = QString(path1).endsWith(".gif", Qt::CaseInsensitive) || QString(path2).endsWith(".gif", Qt::CaseInsensitive);
     img1 = loadImage(path1, GRAYSCALE, gif);
     img2 = loadImage(path2, GRAYSCALE, gif);
-    if(img1 == NULL){
-        qDebug() << "Ocurrio un error en la carga de la imagen " << path1;
-        exit(1);
-    }
-    else{
-        if(img2 == NULL){
-            qDebug() << "Ocurrio un error en la carga de la imagen " << path2;
-            exit(1);
-        }
-    }
 }
 
-IplImage* Utils::loadImage(char* path, bool GRAYSCALE, bool QIMG){
-    qDebug() << "PATH: " << path;
+IplImage* Utils::loadImage(char* path, bool GRAYSCALE, bool QIMG)
+{
     IplImage* img = NULL;
-    if(GRAYSCALE){
-        QImage *q = new QImage(path);
-        qDebug() << "QIMAGE: " << q->height();
-        if(QIMG)
-            img = Utils::qtToCvGrayscale(new QImage(path));
+    if(QIMG){
+        QImage *qImg = new QImage(path);
+        if(qImg->height() == 0 || qImg->width() == 0){
+            qDebug() << "Imagen no encontrada o error en la carga de:" << path;
+            exit(1);
+        }
+        if(GRAYSCALE)
+            img = Utils::qtToCvGrayscale(qImg);
         else
-            img = cvLoadImage(path, CV_LOAD_IMAGE_GRAYSCALE);
-    }else{
-        if(QIMG)
             img = Utils::qtToCv(new QImage(path));
+    }else{
+        if(GRAYSCALE)
+            img = cvLoadImage(path, CV_LOAD_IMAGE_GRAYSCALE);
         else
             img = cvLoadImage(path);
+    }    
+    if(img == NULL){
+        qDebug() << "Imagen no encontrada o error en la carga de:" << path;
+        exit(1);
     }
-    qDebug() << "HEIGHT: " << img->height;
     return img;
 }
 
-//Converts an IplImage to a QImage
-QImage* Utils::cvToQt(IplImage *img){
+QImage* Utils::cvToQt(IplImage *img)
+{
     QImage aux((uchar*) img->imageData , img->width, img->height, img->widthStep, QImage::Format_RGB888);
-    return(new QImage(aux.rgbSwapped())) ;
+    return(new QImage(aux.rgbSwapped()));
 }
 
-//Converts a QImage to an IplImage
-IplImage* Utils::qtToCv(QImage *qImage){
-    IplImage* cvImage;   
-    //qImage = new QImage(qImage->rgbSwapped());
+IplImage* Utils::qtToCv(QImage *qImage)
+{
+    IplImage* cvImage;
     cvImage = cvCreateImageHeader(cvSize(qImage->width(), qImage->height()), IPL_DEPTH_8U, 4);
     cvImage->imageData = (char*)qImage->bits();
     IplImage* colorImage = cvCreateImage( cvGetSize(cvImage), IPL_DEPTH_8U, 3 );
@@ -59,7 +56,8 @@ IplImage* Utils::qtToCv(QImage *qImage){
     return colorImage;
 }
 
-IplImage* Utils::qtToCvGrayscale(QImage *qImage){
+IplImage* Utils::qtToCvGrayscale(QImage *qImage)
+{
     IplImage* img = cvCreateImage(cvSize(qImage->width(), qImage->height()), 8, 1);
     uchar* data = (uchar *)img->imageData;
     int height = img->height;
@@ -67,20 +65,22 @@ IplImage* Utils::qtToCvGrayscale(QImage *qImage){
     int step = img->widthStep;
     for(int i=0; i<height; i++)
         for(int j=0; j<width; j++)
-                data[i*step + j] = qGray(qImage->pixel(j, i));
-    qDebug() << "QTTOGRAY: " << img->height;
+                data[i*step + j] = qGray(qImage->pixel(j, i));   
     return img;
 }
 
-void Utils::toGrayScale(QImage* &img){
-    for(int i=0; i<img->width(); i++)
+void Utils::toGrayScale(QImage* &img)
+{
+    for(int i=0; i<img->width(); i++){
         for(int j=0; j<img->height(); j++){
             int g = qGray(img->pixel(i, j));
             img->setPixel(i, j, qRgb(g, g, g));
         }
+    }
 }
 
-void Utils::toBlack(IplImage* &img){
+void Utils::toBlack(IplImage* &img)
+{
     uchar* data = (uchar *)img->imageData;
     int height = img->height;
     int width = img->width;
@@ -92,8 +92,8 @@ void Utils::toBlack(IplImage* &img){
                 data[i*step + j*channels + k] = 0;
 }
 
-
-IplImage* Utils::drawResultImage(IplImage* img1, IplImage* img2, CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> img1Tri, vector<int> img2Tri, vector<int> ptpairs){
+IplImage* Utils::drawResultImage(IplImage* img1, IplImage* img2, CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> img1Tri, vector<int> img2Tri, vector<int> ptpairs)
+{
     int sep = 5;
     int maxHeight = (img1->height > img2->height) ? img1->height : img2->height;
     IplImage* correspond = cvCreateImage( cvSize(img1->width + img2->width + sep, maxHeight), 8, 3 );
@@ -115,7 +115,8 @@ IplImage* Utils::drawResultImage(IplImage* img1, IplImage* img2, CvSeq *img1Keyp
     return correspond;    
 }
 
-void Utils::drawFeatureCircles(IplImage* &img, CvSeq *imgKeypoints){
+void Utils::drawFeatureCircles(IplImage* &img, CvSeq *imgKeypoints)
+{
     for(int i = 0; i < imgKeypoints->total; i++ ){
         CvSURFPoint* r = (CvSURFPoint*)cvGetSeqElem( imgKeypoints, i );
         CvPoint center;
@@ -127,15 +128,17 @@ void Utils::drawFeatureCircles(IplImage* &img, CvSeq *imgKeypoints){
     }
 }
 
-void Utils::drawFeatureMatchLines(IplImage* &img, CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> ptpairs, int widthOffset){
+void Utils::drawFeatureMatchLines(IplImage* &img, CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> ptpairs, int widthOffset)
+{
     for(int i = 0; i < (int)ptpairs.size(); i += 2 ){
         CvSURFPoint* r1 = (CvSURFPoint*)cvGetSeqElem( img1Keypoints, ptpairs[i] );
         CvSURFPoint* r2 = (CvSURFPoint*)cvGetSeqElem( img2Keypoints, ptpairs[i+1] );
-        cvLine( img, cvPointFrom32f(r1->pt), cvPoint(cvRound(r2->pt.x + widthOffset), cvRound(r2->pt.y)), cvScalar(255, 0, 255) );
+        cvLine( img, cvPointFrom32f(r1->pt), cvPoint(cvRound(r2->pt.x + widthOffset), cvRound(r2->pt.y)), cvScalar(255, 0, 150) );
     }
 }
 
-void Utils::drawTriangle(IplImage* &img, CvSeq *imgKeypoints, vector<int> imgTri){
+void Utils::drawTriangle(IplImage* &img, CvSeq *imgKeypoints, vector<int> imgTri)
+{
     CvSURFPoint* imgV1 = (CvSURFPoint*)cvGetSeqElem( imgKeypoints, imgTri[0] );
     CvSURFPoint* imgV2 = (CvSURFPoint*)cvGetSeqElem( imgKeypoints, imgTri[1] );
     CvSURFPoint* imgV3 = (CvSURFPoint*)cvGetSeqElem( imgKeypoints, imgTri[2] );
@@ -144,42 +147,66 @@ void Utils::drawTriangle(IplImage* &img, CvSeq *imgKeypoints, vector<int> imgTri
     cvLine(img, cvPointFrom32f(imgV2->pt), cvPointFrom32f(imgV3->pt), cvScalar(0, 255, 0) );
 }
 
-void sort(vector<int> &v) {
-    QList<int> l;
-    l << v[0];
-    l << v[1];
-    l << v[2];
-    qSort(l);
-    v[0] = l[0];
-    v[1] = l[1];
-    v[2] = l[2];
-}
-
-bool Utils::toggleRequired(IplImage* img1, IplImage* img2){
+bool Utils::toggleRequired(IplImage* img1, IplImage* img2)
+{
     float w1 = img1->width;
     float h1 = img1->height;
     float w2 = img2->width;
     float h2 = img2->height;
-    cout << w1 << " - " << h1 << " - " << w2 << " - " << h2;
-    if(w1 >= w2){
-        if(h1 >= h2){
+    //Se determina si es necesario invertir el orden de las imágenes según las diferencias de altura y ancho.
+    if(w1 >= w2)
+        if(h1 >= h2)
             return true;
-        }
-        else{
+        else
             if(w1/w2 > h2/h1)
                 return true;
             else
                 return false;
-        }
-    }
-    else{
-        if(h1 >= h2){
+    else
+        if(h1 >= h2)
             if(w2/w1 > h1/h2)
                 return false;
             else
                 return true;
-        }
         else
             return false;
-    }
+}
+
+double Utils::getY(QRgb rgb){
+    return 0.299*qRed(rgb) + 0.587*qGreen(rgb) + 0.114*qBlue(rgb);
+}
+
+double Utils::getI(QRgb rgb){
+    return 0.595716*qRed(rgb) - 0.274453*qGreen(rgb) - 0.321263*qBlue(rgb);
+}
+
+double Utils::getQ(QRgb rgb){
+    return 0.211456*qRed(rgb) - 0.522591*qGreen(rgb) + 0.311135*qBlue(rgb);
+}
+
+double Utils::linearRangeMap(double rms){
+    double x = (rms - 0.5) * LRM_K;
+    if(VERBOSE)
+        cout << "Mapeo lineal de rango: " << x << " (K=" << LRM_K << ")" << endl << endl;
+    return x;
+}
+
+double Utils::sigmoidal(double x){
+    double v = 1 / (1 + exp(-x));
+    if(VERBOSE)
+        qDebug() << "Sigmoidal:" << v << endl;
+    return v;
+}
+
+void Utils::show(char* title, IplImage* img){
+    cvNamedWindow(title, 1);
+    cvMoveWindow(title, 100, 100);
+    cvShowImage(title, img);
+}
+
+void Utils::show(QString title, QImage* img){
+    QLabel label;
+    label.setPixmap(QPixmap::fromImage(*img));
+    label.setWindowTitle(title);
+    label.show();
 }

@@ -3,15 +3,18 @@
 bool Features::VERBOSE = false;
 bool Features::GRAPHIC = false;
 
-void Features::setVerbose(bool verbose){
+void Features::setVerbose(bool verbose)
+{
     VERBOSE = verbose;
 }
 
-void Features::setGraphic(bool graphic){
+void Features::setGraphic(bool graphic)
+{
     GRAPHIC = graphic;
 }
 
-double Features::compareSURFDescriptors(const float* d1, const float* d2, double best, int length){
+double Features::compareSURFDescriptors(const float* d1, const float* d2, double best, int length)
+{
     double total_cost = 0;
     assert( length % 4 == 0 );
     for( int i = 0; i < length; i += 4 ){
@@ -26,7 +29,8 @@ double Features::compareSURFDescriptors(const float* d1, const float* d2, double
     return total_cost;
 }
 
-int Features::naiveNearestNeighbor(const float* vec, int laplacian, const CvSeq* model_keypoints, const CvSeq* model_descriptors){
+int Features::naiveNearestNeighbor(const float* vec, int laplacian, const CvSeq* model_keypoints, const CvSeq* model_descriptors)
+{
     int length = (int)(model_descriptors->elem_size/sizeof(float));
     int i, neighbor = -1;
     double d, dist1 = 1e6, dist2 = 1e6;
@@ -34,11 +38,10 @@ int Features::naiveNearestNeighbor(const float* vec, int laplacian, const CvSeq*
     cvStartReadSeq( model_keypoints, &kreader, 0 );
     cvStartReadSeq( model_descriptors, &reader, 0 );
 
-    for( i = 0; i < model_descriptors->total; i++ )
-    {
+    for( i = 0; i < model_descriptors->total; i++ ){
         const CvSURFPoint* kp = (const CvSURFPoint*)kreader.ptr;
         const float* mvec = (const float*)reader.ptr;
-    	CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
+        CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
         CV_NEXT_SEQ_ELEM( reader.seq->elem_size, reader );
         if( laplacian != kp->laplacian )
             continue;
@@ -57,15 +60,15 @@ int Features::naiveNearestNeighbor(const float* vec, int laplacian, const CvSeq*
     return -1;
 }
 
-void Features::findPairs(const CvSeq* objectKeypoints, const CvSeq* objectDescriptors, const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs){
+void Features::findPairs(const CvSeq* objectKeypoints, const CvSeq* objectDescriptors, const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs)
+{
     int i;
     CvSeqReader reader, kreader;
     cvStartReadSeq( objectKeypoints, &kreader );
     cvStartReadSeq( objectDescriptors, &reader );
     ptpairs.clear();
 
-    for( i = 0; i < objectDescriptors->total; i++ )
-    {
+    for( i = 0; i < objectDescriptors->total; i++ ){
         const CvSURFPoint* kp = (const CvSURFPoint*)kreader.ptr;
         const float* descriptor = (const float*)reader.ptr;
         CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
@@ -79,11 +82,12 @@ void Features::findPairs(const CvSeq* objectKeypoints, const CvSeq* objectDescri
     }
 }
 
-void Features::flannFindPairs(const CvSeq*, const CvSeq* objectDescriptors, const CvSeq*, const CvSeq* imageDescriptors, vector<int>& ptpairs){
+void Features::flannFindPairs(const CvSeq*, const CvSeq* objectDescriptors, const CvSeq*, const CvSeq* imageDescriptors, vector<int>& ptpairs)
+{
 	int length = (int)(objectDescriptors->elem_size/sizeof(float));
 
     cv::Mat m_object(objectDescriptors->total, length, CV_32F);
-	cv::Mat m_image(imageDescriptors->total, length, CV_32F);
+    cv::Mat m_image(imageDescriptors->total, length, CV_32F);
 
     CvSeqReader obj_reader;
 	float* obj_ptr = m_object.ptr<float>(0);
@@ -98,8 +102,7 @@ void Features::flannFindPairs(const CvSeq*, const CvSeq* objectDescriptors, cons
     CvSeqReader img_reader;
 	float* img_ptr = m_image.ptr<float>(0);
     cvStartReadSeq( imageDescriptors, &img_reader );
-    for(int i = 0; i < imageDescriptors->total; i++ )
-    {
+    for(int i = 0; i < imageDescriptors->total; i++ ){
         const float* descriptor = (const float*)img_reader.ptr;
         CV_NEXT_SEQ_ELEM( img_reader.seq->elem_size, img_reader );
         memcpy(img_ptr, descriptor, length*sizeof(float));
@@ -109,65 +112,26 @@ void Features::flannFindPairs(const CvSeq*, const CvSeq* objectDescriptors, cons
     //Encontrar "nearest neighbors" usando FLANN
     cv::Mat m_indices(objectDescriptors->total, 2, CV_32S);
     cv::Mat m_dists(objectDescriptors->total, 2, CV_32F);
-    cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4));  // Using 4 randomized kdtrees
-    flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); // Maximum number of leafs checked
+    cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4));  //Using 4 randomized kdtrees
+    flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); //Maximum number of leafs checked
 
     int* indices_ptr = m_indices.ptr<int>(0);
     float* dists_ptr = m_dists.ptr<float>(0);
-    for (int i=0;i<m_indices.rows;++i) {
-    	if (dists_ptr[2*i]<0.6*dists_ptr[2*i+1]) {
-    		ptpairs.push_back(i);
-    		ptpairs.push_back(indices_ptr[2*i]);
-    	}
+    for (int i=0;i<m_indices.rows;++i){
+        if (dists_ptr[2*i]<0.6*dists_ptr[2*i+1]){
+            ptpairs.push_back(i);
+            ptpairs.push_back(indices_ptr[2*i]);
+        }
     }
 }
 
-int Features::locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors, const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, const CvPoint src_corners[4], CvPoint dst_corners[4]){
-    double h[9];
-    CvMat _h = cvMat(3, 3, CV_64F, h);
-    vector<int> ptpairs;
-    vector<CvPoint2D32f> pt1, pt2;
-    CvMat _pt1, _pt2;
-    int i, n;
-
-#ifdef USE_FLANN
-    flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#else
-    findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#endif
-
-    n = ptpairs.size()/2;
-    if( n < 4 )
-        return 0;
-
-    pt1.resize(n);
-    pt2.resize(n);
-    for( i = 0; i < n; i++ ){
-        pt1[i] = ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
-        pt2[i] = ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
-    }
-
-    _pt1 = cvMat(1, n, CV_32FC2, &pt1[0] );
-    _pt2 = cvMat(1, n, CV_32FC2, &pt2[0] );
-    if( !cvFindHomography( &_pt1, &_pt2, &_h, CV_RANSAC, 5 ))
-        return 0;
-
-    for( i = 0; i < 4; i++ ){
-        double x = src_corners[i].x, y = src_corners[i].y;
-        double Z = 1./(h[6]*x + h[7]*y + h[8]);
-        double X = (h[0]*x + h[1]*y + h[2])*Z;
-        double Y = (h[3]*x + h[4]*y + h[5])*Z;
-        dst_corners[i] = cvPoint(cvRound(X), cvRound(Y));
-    }
-    return 1;
-}
-
-vector<int> Features::getTriangle(const CvSeq* imgKeypoints, vector<int> ptpairs){
+vector<int> Features::getTriangle(const CvSeq* imgKeypoints, vector<int> ptpairs)
+{
     float maxArea = 0;
     vector<int> ret;
     ret.reserve(3);
     Vector3D vec1;
-    Vector3D vec2;   
+    Vector3D vec2;
 
     //Se recorre todo el espacio de puntos para hallar el trío que determina el triángulo de área máxima.
     for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
@@ -195,7 +159,8 @@ vector<int> Features::getTriangle(const CvSeq* imgKeypoints, vector<int> ptpairs
     return ret;
 }
 
-vector<int> Features::getMatchingTriangle(const CvSeq* objectKeypoints, vector<int> srcTri, vector<int> ptpairs ){
+vector<int> Features::getMatchingTriangle(const CvSeq* objectKeypoints, vector<int> srcTri, vector<int> ptpairs )
+{
     vector<int> matchTri;
     int m1, m2, m3;
     matchTri.reserve(3);
@@ -205,17 +170,17 @@ vector<int> Features::getMatchingTriangle(const CvSeq* objectKeypoints, vector<i
     for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
         CvSURFPoint* pt = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, ptpairs[i] );
         CvSURFPoint* v1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, srcTri[0] );
-        if((v1->pt.x == pt->pt.x) && (v1->pt.y == pt->pt.y)){           
+        if((v1->pt.x == pt->pt.x) && (v1->pt.y == pt->pt.y)){
             m1 = ptpairs[i+1];
             continue;
         }
         CvSURFPoint* v2 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, srcTri[1] );
-        if((v2->pt.x == pt->pt.x) && (v2->pt.y == pt->pt.y)){            
+        if((v2->pt.x == pt->pt.x) && (v2->pt.y == pt->pt.y)){
             m2 = ptpairs[i+1];
             continue;
         }
         CvSURFPoint* v3 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, srcTri[2] );
-        if((v3->pt.x == pt->pt.x) && (v3->pt.y == pt->pt.y)){           
+        if((v3->pt.x == pt->pt.x) && (v3->pt.y == pt->pt.y)){
             m3 = ptpairs[i+1];
             continue;
         }
@@ -226,8 +191,8 @@ vector<int> Features::getMatchingTriangle(const CvSeq* objectKeypoints, vector<i
     return matchTri;
 }
 
-
-bool Features::vertexHorzCorrespondence(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index){
+bool Features::vertexHorzCorrespondence(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index)
+{
     CvSURFPoint* objV1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[0] );
     CvSURFPoint* objV2 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[1] );
     CvSURFPoint* objV3 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[2] );
@@ -248,8 +213,8 @@ bool Features::vertexHorzCorrespondence(vector<int> objTri, vector<int> imgTri, 
     return ((fabs(angle1 - angle2) < ANGLEDELTA) && (fabs(angle1 - angle3) < ANGLEDELTA) && (fabs(angle2 - angle3) < ANGLEDELTA));
 }
 
-
-bool Features::vertexVertCorrespondence(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index){
+bool Features::vertexVertCorrespondence(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index)
+{
     CvSURFPoint* objV1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[0] );
     CvSURFPoint* objV2 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[1] );
     CvSURFPoint* objV3 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[2] );
@@ -270,15 +235,16 @@ bool Features::vertexVertCorrespondence(vector<int> objTri, vector<int> imgTri, 
     return ((fabs(angle1 - angle2) < ANGLEDELTA) && (fabs(angle1 - angle3) < ANGLEDELTA) && (fabs(angle2 - angle3) < ANGLEDELTA));
 }
 
-bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index){
-
-    //Se chequeo que los triángulos no contengan outliers matchings.
+bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index)
+{
+    //Se chequea que los triángulos no contengan outliers matchings.
     bool res1 = vertexHorzCorrespondence(objTri, imgTri, objectKeypoints, imageKeypoints, objSize, index);
     bool res2 = vertexVertCorrespondence(objTri, imgTri, objectKeypoints, imageKeypoints, objSize, index);
     return res1 && res2;
 }
 
-void Features::removeMatch(const CvSeq* objectKeypoints, vector<int> &ptpairs, int pt){
+void Features::removeMatch(const CvSeq* objectKeypoints, vector<int> &ptpairs, int pt)
+{
     //Se remueve del conjunto de pares tanto el punto indicado por "pt" de la imagen 1,
     //como el punto correspondiente de la imagen 2.
     for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
@@ -291,37 +257,33 @@ void Features::removeMatch(const CvSeq* objectKeypoints, vector<int> &ptpairs, i
     }
 }
 
-bool Features::findGoodTriangles(const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> ptpairs, vector<int> objSize, vector<int> &objTri, vector<int> &imgTri){
+bool Features::findGoodTriangles(const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> ptpairs, vector<int> objSize, vector<int> &objTri, vector<int> &imgTri)
+{
     bool goodTriangle = false;
     int index = 0;
-    while(!goodTriangle){        
+    //Se buscan triángulos que resulten convenientes para realizar la transformación.
+    while(!goodTriangle){
         objTri = getTriangle(objectKeypoints, ptpairs);
         imgTri = getMatchingTriangle(objectKeypoints, objTri, ptpairs);
         //goodTriangle = checkTriangles(objTri, imgTri, objectKeypoints, imageKeypoints, objSize, index);
         goodTriangle = true;
         if(!goodTriangle)
-           removeMatch(objectKeypoints, ptpairs, objTri[index]);        
-        if(VERBOSE){
-            cout << "Descriptores del triangulo de la imagen 1: (" << objTri[0] << ", " << objTri[1] << ", " << objTri[2] << ")" << endl;
-            cout << "Descriptores del triangulo de la imagen 2: (" << imgTri[0] << ", " << imgTri[1] << ", " << imgTri[2] << ")" << endl << endl;
-        }
+           removeMatch(objectKeypoints, ptpairs, objTri[index]);
+        //cout << ptpairs.size() << endl;
+    }
+    if(VERBOSE){
+        cout << "Descriptores del triangulo de la imagen 1: <" << objTri[0] << ", " << objTri[1] << ", " << objTri[2] << ">" << endl;
+        cout << "Descriptores del triangulo de la imagen 2: <" << imgTri[0] << ", " << imgTri[1] << ", " << imgTri[2] << ">" << endl << endl;
     }
     return goodTriangle;
 }
 
-QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> &objTri, vector<int> &imgTri){
-    // Matriz de la transformación:
-    // |a b c|
-    // |d e f|
-    // |0 0 1|
-    /*
-    CvPoint2D32f v1 = ((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[0] ))->pt;
-    CvPoint2D32f v2 = ((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[1] ))->pt;
-    CvPoint2D32f v3 = ((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[2] ))->pt;
-    CvPoint2D32f u1 = ((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[0] ))->pt;
-    CvPoint2D32f u2 = ((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[1] ))->pt;
-    CvPoint2D32f u3 = ((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[2] ))->pt;
-    */
+QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> &objTri, vector<int> &imgTri)
+{
+    //Matriz de la transformación:  |a b c|
+    //                              |d e f|
+    //                              |0 0 1|
+
     CvPoint v1 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[0] ))->pt);
     CvPoint v2 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[1] ))->pt);
     CvPoint v3 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[2] ))->pt);
@@ -359,26 +321,28 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
     return QTransform(a1, a4, 0, a2, a5, 0, a3, a6);;
 }
 
-bool Features::featuresBasedTransform(IplImage* object, IplImage* image, QTransform &transform, IplImage* img1, IplImage* img2){
+bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImage* img1, IplImage* img2, QTransform &transform)
+{
     CvMemStorage* storage = cvCreateMemStorage(0);
 
     //Búsqueda de features para ambas imágenes.
     CvSeq *objectKeypoints = 0, *objectDescriptors = 0;
     CvSeq *imageKeypoints = 0, *imageDescriptors = 0;
     CvSURFParams params = cvSURFParams(500, 1);
-
     double tt = (double)cvGetTickCount();
     cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params );
-    qDebug() << "Features hallados en la imagen 1: " << objectDescriptors->total << endl;
     cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );
-    qDebug() << "Features hallados en la imagen 2: " << imageDescriptors->total << endl;
     tt = (double)cvGetTickCount() - tt;
-    qDebug() << "Tiempo de extraccion: " << tt/(cvGetTickFrequency()*1000.) << " ms." << endl << endl;
+    if(VERBOSE){
+        qDebug() << "Features hallados en la imagen 1:" << objectDescriptors->total;
+        qDebug() << "Features hallados en la imagen 2:" << imageDescriptors->total;
+        qDebug() << "Tiempo de extraccion:" << tt/(cvGetTickFrequency()*1000.) << "ms." << endl;
+    }
 
     //En caso de ser insuficiente la cantidad de features para alguna de las imágenes, se retorna sin resultado.
     if(objectKeypoints->total < MINPAIRS || imageKeypoints->total < MINPAIRS){
         if(VERBOSE)
-            qDebug() << "La cantidad de puntos caracteristicos encontrados es insuficiente para calcular la transformacion.";
+            qDebug() << "La cantidad de features encontrados es insuficiente para calcular una transformacion." << endl;
         return false;
     }
 
@@ -391,13 +355,15 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, QTransf
 #endif
 
     //En caso de ser insuficiente la cantidad de puntos de correspondencia, se retorna sin resultado.
-    if(ptpairs.size() < MINPAIRS/2){
+    if(VERBOSE)
+        qDebug() << "Cantidad de puntos de correspondencia:" << (int)(ptpairs.size()/2) << endl;
+    if(ptpairs.size()/2 < MINPAIRS){
         if(VERBOSE)
-            qDebug() << "La cantidad de puntos de correspondencia entre las imágenes es insuficiente para calcular la transformacion.";
+            qDebug() << "La cantidad de puntos de correspondencia entre las imagenes es insuficiente para calcular una transformacion." << endl;
         return false;
     }
 
-    //Busqueda de los triángulos que determinarán la transformación a realizar.
+    //Búsqueda de los triángulos que determinarán la transformación a realizar.
     vector<int> objTri, imgTri, objSize;
     objTri.reserve(3);
     imgTri.reserve(3);
@@ -408,7 +374,7 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, QTransf
     //En caso de no hallarse los triángulos de manera satisfactoria, se retorna sin resultado.
     if(!goodTriangle){
         if(VERBOSE)
-            qDebug() << "Los triangulos de correspondencia hallados no permiten realizar una transformacion correcta.";
+            qDebug() << "Los triangulos de correspondencia hallados no permiten realizar una transformacion correcta." << endl;
         return false;
     }
 
@@ -423,6 +389,5 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, QTransf
         cvWaitKey(0);
         cvDestroyAllWindows();
     }
-
     return true;
 }

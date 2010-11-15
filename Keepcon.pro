@@ -2,8 +2,6 @@
 # Project created by QtCreator 2010-10-06T11:20:39
 # -------------------------------------------------
 QT += core
-
-# QT       += gui
 TARGET = Keepcon
 CONFIG += console
 CONFIG -= app_bundle
@@ -15,9 +13,6 @@ LIBS += "C:\Program Files (x86)\OpenCV2.0\lib\libcv200.dll.a" \
     "C:\Program Files (x86)\OpenCV2.0\lib\libhighgui200.dll.a" \
     "C:\Program Files (x86)\OpenCV2.0\lib\libml200.dll.a"
 TEMPLATE = app
-
-# QTPLUGIN += qjpeg \
-# qgif
 OBJECTS_DIR = obj
 SOURCES += src/main.cpp \
     src/imagefuncs.cpp \
