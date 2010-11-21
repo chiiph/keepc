@@ -321,6 +321,20 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
     return QTransform(a1, a4, 0, a2, a5, 0, a3, a6);;
 }
 
+void Features::getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors){
+    keypoints=0; descriptors=0;
+    CvMemStorage* storage = cvCreateMemStorage(0);
+    CvSURFParams params = cvSURFParams(500, 1);
+    cvExtractSURF(img, 0, &keypoints, &descriptors, storage, params);
+}
+
+int Features::getHashKey(IplImage *img){
+    CvSeq *keypoints=0, *descriptors=0;
+    Features::getFeatures(img, keypoints, descriptors);
+    //CALCULAR KEY
+    return 123;
+}
+
 bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImage* img1, IplImage* img2, QTransform &transform)
 {
     CvMemStorage* storage = cvCreateMemStorage(0);

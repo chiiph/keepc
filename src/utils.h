@@ -3,7 +3,6 @@
 #define LRM_K 6
 #include <vector>
 #include <QImage>
-#include <cv.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -86,7 +85,7 @@ public:
 
     static void show(char* title, IplImage* img);
 
-    static void show(QString title, QImage* img);
+    static void show(QString title, QImage* img);    
 
 private:
 

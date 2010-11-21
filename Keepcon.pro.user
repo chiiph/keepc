@@ -85,13 +85,14 @@
     <value type="QString">COMPUTERNAME=CHANGODELL</value>
     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOME=C:\Users\Chango</value>
     <value type="QString">HOMEDRIVE=C:</value>
     <value type="QString">HOMEPATH=\Users\Chango</value>
     <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
     <value type="QString">LOGONSERVER=\\CHANGODELL</value>
     <value type="QString">NUMBER_OF_PROCESSORS=2</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\OpenCV2.0\bin</value>
     <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
     <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
@@ -114,10 +115,9 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
-    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">E:/Proyectos/Qt/win/Keepcon/Keepcon.pro</value>
+    <value type="QString">E:/Proyectos/Git/keepc/Keepcon.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">win32-g++</value>
     <value type="QString">-r</value>
@@ -125,7 +125,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">c:/qt/qt/bin/qmake.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Git/keepc</value>
    <valuelist key="qmakeArgs" type="QVariantList"/>
   </valuemap>
  </data>
@@ -142,13 +142,14 @@
     <value type="QString">COMPUTERNAME=CHANGODELL</value>
     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOME=C:\Users\Chango</value>
     <value type="QString">HOMEDRIVE=C:</value>
     <value type="QString">HOMEPATH=\Users\Chango</value>
     <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
     <value type="QString">LOGONSERVER=\\CHANGODELL</value>
     <value type="QString">NUMBER_OF_PROCESSORS=2</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\OpenCV2.0\bin</value>
     <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
     <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
@@ -171,7 +172,6 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
-    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -180,7 +180,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Git/keepc</value>
    <valuelist key="makeargs" type="QVariantList">
     <value type="QString">debug</value>
    </valuelist>
@@ -257,13 +257,14 @@
     <value type="QString">COMPUTERNAME=CHANGODELL</value>
     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOME=C:\Users\Chango</value>
     <value type="QString">HOMEDRIVE=C:</value>
     <value type="QString">HOMEPATH=\Users\Chango</value>
     <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
     <value type="QString">LOGONSERVER=\\CHANGODELL</value>
     <value type="QString">NUMBER_OF_PROCESSORS=2</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\OpenCV2.0\bin</value>
     <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
     <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
@@ -286,10 +287,9 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
-    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">E:/Proyectos/Qt/win/Keepcon/Keepcon.pro</value>
+    <value type="QString">E:/Proyectos/Git/keepc/Keepcon.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">win32-g++</value>
     <value type="QString">-r</value>
@@ -298,7 +298,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">c:/qt/qt/bin/qmake.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Git/keepc</value>
    <valuelist key="qmakeArgs" type="QVariantList"/>
   </valuemap>
  </data>
@@ -315,13 +315,14 @@
     <value type="QString">COMPUTERNAME=CHANGODELL</value>
     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOME=C:\Users\Chango</value>
     <value type="QString">HOMEDRIVE=C:</value>
     <value type="QString">HOMEPATH=\Users\Chango</value>
     <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
     <value type="QString">LOGONSERVER=\\CHANGODELL</value>
     <value type="QString">NUMBER_OF_PROCESSORS=2</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\OpenCV2.0\bin</value>
     <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
     <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
@@ -344,7 +345,6 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
-    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -353,7 +353,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Git/keepc</value>
    <valuelist key="makeargs" type="QVariantList">
     <value type="QString">release</value>
    </valuelist>
@@ -372,13 +372,14 @@
     <value type="QString">COMPUTERNAME=CHANGODELL</value>
     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOME=C:\Users\Chango</value>
     <value type="QString">HOMEDRIVE=C:</value>
     <value type="QString">HOMEPATH=\Users\Chango</value>
     <value type="QString">LOCALAPPDATA=C:\Users\Chango\AppData\Local</value>
     <value type="QString">LOGONSERVER=\\CHANGODELL</value>
     <value type="QString">NUMBER_OF_PROCESSORS=2</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\OpenCV2.0\bin</value>
+    <value type="QString">PATH=C:\Qt\mingw\bin;C:\Qt\qt\bin;C:\Python26\Lib\site-packages\PyQt4\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Program Files (x86)\pl\bin;C:\Compiladores\PROYECTO2;C:\Program Files (x86)\Java\jdk1.5.0_08\bin;C:\Program Files (x86)\PHP5;C:\Python26;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\projects\servidores\proyecto4\cake\console;C:\Program Files (x86)\Adobe\Flex SDK\bin;C:\Program Files (x86)\Doxygen\bin;C:\mysql\lib\opt\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\OpenCV2.0\bin</value>
     <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
     <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
@@ -401,7 +402,6 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
-    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -410,7 +410,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">C:/Qt/mingw/bin/mingw32-make.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Qt/win/Keepcon</value>
+   <value key="abstractProcess.workingDirectory" type="QString">E:/Proyectos/Git/keepc</value>
    <value key="cleanConfig" type="bool">true</value>
    <valuelist key="makeargs" type="QVariantList">
     <value type="QString">clean</value>

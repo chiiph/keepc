@@ -84,6 +84,10 @@ public:
      */
     static bool featuresBasedTransform(IplImage* object, IplImage* image, IplImage* img1, IplImage* img2, QTransform &transform);
 
+    static void getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors);
+
+    static int getHashKey(IplImage* img);
+
 private:
 
     static bool VERBOSE;

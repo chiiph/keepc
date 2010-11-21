@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QtPlugin>
 #include <QString>
 #include <highgui.h>
 #include <ctype.h>
@@ -9,6 +8,7 @@
 #include "imagefuncs.h"
 #include "features.h"
 #include "utils.h"
+#include "imagehash.h"
 
 using namespace std;
 
@@ -69,7 +69,22 @@ void checkCall(int argc, char *argv[], char* &path1, char* &path2)
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.addLibraryPath(".");
 
+    IplImage *img = Utils::loadImage(argv[1], true);
+    ImageHash hash = ImageHash();
+    hash.insert("sb.jpg", 120);
+    hash.insert("sb1.jpg", 121);
+    hash.insert("sb2.jpg", 122);
+    hash.insert("sb3.jpg", 123);
+    hash.insert("sb4.jpg", 123);
+    hash.insert("sb5.jpg", 122);
+    hash.insert("sb6.jpg", 125);
+    hash.insert("sb7.jpg", 121);
+    hash.insert("sb8.jpg", 125);
+    qDebug() << hash.getMatchs(Features::getHashKey(img));
+
+    /*
     IplImage *img1, *img2, *img1C, *img2C;
     char *path1, *path2;
 
@@ -99,7 +114,7 @@ int main(int argc, char *argv[])
     cvReleaseImage(&img2);
     cvReleaseImage(&img1C);
     cvReleaseImage(&img2C);
-
+    */
     exit(0);
     return app.exec();
 }

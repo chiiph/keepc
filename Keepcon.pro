@@ -1,7 +1,9 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-10-06T11:20:39
 # -------------------------------------------------
-QT += core
+QT += core \
+    gui \
+    sql
 TARGET = Keepcon
 CONFIG += console
 CONFIG -= app_bundle
@@ -17,8 +19,10 @@ OBJECTS_DIR = obj
 SOURCES += src/main.cpp \
     src/imagefuncs.cpp \
     src/features.cpp \
-    src/utils.cpp
+    src/utils.cpp \
+    src/imagehash.cpp
 HEADERS += src/imagefuncs.h \
     src/features.h \
     src/vector3d.h \
-    src/utils.h
+    src/utils.h \
+    src/imagehash.h
