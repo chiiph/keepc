@@ -287,6 +287,7 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">E:/Proyectos/Git/keepc/Keepcon.pro</value>
@@ -345,6 +346,7 @@
     <value type="QString">USERNAME=Chango</value>
     <value type="QString">USERPROFILE=C:\Users\Chango</value>
     <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">__COMPAT_LAYER=ElevateCreateProcess</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">

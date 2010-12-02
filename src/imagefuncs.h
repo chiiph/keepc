@@ -1,6 +1,7 @@
 #ifndef IMAGEFUNCS_H
 #define IMAGEFUNCS_H
-#define MAX_DIFF 69416.609  // 0.8*(255^2) + 0.15*(303.807^2) + 0.05*(266.526^2)
+//#define MAX_DIFF 69416.609  // 0.8*(255^2) + 0.15*(303.807^2) + 0.05*(266.526^2)
+#define MAX_DIFF 52020
 #include "cv.h"
 #include "highgui.h"
 #include <QImage>
@@ -44,6 +45,8 @@ public:
      * Establece la región a tener en cuenta según el desplazamiento (img1x, img1y) que presenta la imagen 1.
      */
     static double yiqRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y);
+
+    static double rgbRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y);
 
     /*!
      * Determina el Root Mean Square (RMS) existente entre las imágenes recibidas.

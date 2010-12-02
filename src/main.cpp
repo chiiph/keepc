@@ -71,20 +71,15 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.addLibraryPath(".");
 
+    /*
     IplImage *img = Utils::loadImage(argv[1], true);
     ImageHash hash = ImageHash();
-    hash.insert("sb.jpg", 120);
-    hash.insert("sb1.jpg", 121);
-    hash.insert("sb2.jpg", 122);
-    hash.insert("sb3.jpg", 123);
-    hash.insert("sb4.jpg", 123);
-    hash.insert("sb5.jpg", 122);
-    hash.insert("sb6.jpg", 125);
-    hash.insert("sb7.jpg", 121);
-    hash.insert("sb8.jpg", 125);
-    qDebug() << hash.getMatchs(Features::getHashKey(img));
+    hash.insert("../img/sb1.jpg", Features::getHessians(img));
+    hash.insert("../img/sb.jpg", Features::getHessians(img));
+    QStringList paths = hash.select(Features::getHessians(img));
+    qDebug() << paths;
+    */
 
-    /*
     IplImage *img1, *img2, *img1C, *img2C;
     char *path1, *path2;
 
@@ -109,12 +104,13 @@ int main(int argc, char *argv[])
         result = ImageFuncs::resizeBasedRMS(img1C, img2C);
 
     cout << "Resultado: " << result << endl;
+    //cout << result;// << endl;
 
     cvReleaseImage(&img1);
     cvReleaseImage(&img2);
     cvReleaseImage(&img1C);
     cvReleaseImage(&img2C);
-    */
+
     exit(0);
     return app.exec();
 }

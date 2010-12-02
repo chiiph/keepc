@@ -3,6 +3,8 @@
 #include <QString>
 #include <QtSql>
 #include <QDebug>
+#define HASH_DEPTH 10
+#define SEARCH_DEPTH 5
 
 class ImageHash
 {
@@ -10,8 +12,8 @@ public:
 
     ImageHash(QString dbName = "db\\hash.db");
     void create();
-    void insert(QString path, int key);
-    void select();
+    void insert(QString path, QList<int> hessians);
+    QStringList select(QList<int> hessians);
     QStringList getMatchs(int key);
 
 private:

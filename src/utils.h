@@ -87,6 +87,10 @@ public:
 
     static void show(QString title, QImage* img);    
 
+    static QList<int> sortByHessian(CvSeq* &keypoints);
+
+    static void printPairsInfo(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> ptpairs);
+
 private:
 
     static bool VERBOSE;

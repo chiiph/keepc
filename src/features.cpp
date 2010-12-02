@@ -289,7 +289,7 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
     CvPoint v3 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( objectKeypoints, objTri[2] ))->pt);
     CvPoint u1 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[0] ))->pt);
     CvPoint u2 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[1] ))->pt);
-    CvPoint u3 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[2] ))->pt);
+    CvPoint u3 = cvPointFrom32f(((CvSURFPoint*)cvGetSeqElem( imageKeypoints, imgTri[2] ))->pt);    
 
     double 	x11 = v1.x,
             x12 = v1.y,
@@ -318,7 +318,7 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
     if(VERBOSE)
         cout << "Transformacion hallada: [" << a1 << ", " << a4 << ", 0, " << a2 << ", " << a5 << ", 0, " << a3 << ", " << a6 << ", 1]" << endl << endl;
 
-    return QTransform(a1, a4, 0, a2, a5, 0, a3, a6);;
+    return QTransform(a1, a4, 0, a2, a5, 0, a3, a6);
 }
 
 void Features::getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors){
@@ -328,11 +328,59 @@ void Features::getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors
     cvExtractSURF(img, 0, &keypoints, &descriptors, storage, params);
 }
 
-int Features::getHashKey(IplImage *img){
+QList<int> Features::getHessians(IplImage *img){
     CvSeq *keypoints=0, *descriptors=0;
     Features::getFeatures(img, keypoints, descriptors);
-    //CALCULAR KEY
-    return 123;
+//    for(int i=0; i<keypoints->total; i++){
+//        CvSURFPoint* p = (CvSURFPoint*)cvGetSeqElem(keypoints, i);
+//        qDebug() << "i:" << i << ", Hessian:" << p->hessian << ", Laplacian:" << p->laplacian << ", Size:" << p->size << ", Dir:" << p->dir;
+//    }
+    QList<int> hessians = Utils::sortByHessian(keypoints);
+    //qDebug() << hessians;
+    return hessians;
+}
+
+void Features::filterByDirection(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> &ptpairs){
+    QList<int> hist;
+    float dirDiff = 0;
+    int mostAccDiff = 0;
+
+    for(int i=0; i<360; i++)
+        hist << 0;
+    for(int i=0; i<(int)ptpairs.size(); i+=2 ){
+        CvSURFPoint* f1 = (CvSURFPoint*)cvGetSeqElem( img1Keypoints, ptpairs[i] );
+        CvSURFPoint* f2 = (CvSURFPoint*)cvGetSeqElem( img2Keypoints, ptpairs[i+1] );
+        int dir1 = (int)f1->dir;
+        int dir2 = (int)f2->dir;
+        if(dir1 > dir2)
+            dir2 += 360;
+        hist[dir2 - dir1]++;
+        dirDiff += dir2 - dir1;
+    }
+    dirDiff = dirDiff / (ptpairs.size()/2);
+    //qDebug() << "Diferencia de direcciones promedio:" << dirDiff;
+
+    for(int i=0; i<360; i++){
+        if(hist[i] > hist[mostAccDiff])
+            mostAccDiff = i;
+    }
+    //qDebug() << "Diferencia de direccion mas observada:" << mostAccDiff;
+    //qDebug() << "Numero de matching features (antes del filtrado):" << (int)ptpairs.size()/2;
+
+    for(int i=0; i<(int)ptpairs.size(); i+=2 ){
+        CvSURFPoint* f1 = (CvSURFPoint*)cvGetSeqElem( img1Keypoints, ptpairs[i] );
+        CvSURFPoint* f2 = (CvSURFPoint*)cvGetSeqElem( img2Keypoints, ptpairs[i+1] );
+        int dir1 = (int)f1->dir;
+        int dir2 = (int)f2->dir;
+        if(dir1 > dir2)
+            dir2 += 360;
+        if(abs((dir2 - dir1) - mostAccDiff) > 4){
+            ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);
+            i-=2;
+        }
+    }
+    //qDebug() << "Numero de matching features (despues del filtrado):" << (int)ptpairs.size()/2;
+    //Utils::printPairsInfo(img1Keypoints, img2Keypoints, ptpairs);
 }
 
 bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImage* img1, IplImage* img2, QTransform &transform)
@@ -368,6 +416,10 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
     Features::findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
 #endif
 
+    /**************************************************************************************************************/
+    Features::filterByDirection(objectKeypoints, imageKeypoints, ptpairs);
+    /**************************************************************************************************************/
+
     //En caso de ser insuficiente la cantidad de puntos de correspondencia, se retorna sin resultado.
     if(VERBOSE)
         qDebug() << "Cantidad de puntos de correspondencia:" << (int)(ptpairs.size()/2) << endl;
@@ -375,7 +427,7 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
         if(VERBOSE)
             qDebug() << "La cantidad de puntos de correspondencia entre las imagenes es insuficiente para calcular una transformacion." << endl;
         return false;
-    }
+    }    
 
     //Búsqueda de los triángulos que determinarán la transformación a realizar.
     vector<int> objTri, imgTri, objSize;

@@ -211,4 +211,22 @@ void Utils::show(QString title, QImage* img){
     label.show();
 }
 
+QList<int> Utils::sortByHessian(CvSeq*&keypoints){
+    QList<int> list;
+    for(int i=0; i<keypoints->total; i++){
+        CvSURFPoint* p = (CvSURFPoint*)cvGetSeqElem(keypoints, i);
+        list << (int)p->hessian;
+    }
+    qSort(list.begin(), list.end(), qGreater<int>());
+    return list;
+}
 
+void Utils::printPairsInfo(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> ptpairs){
+    for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
+        CvSURFPoint* f1 = (CvSURFPoint*)cvGetSeqElem( img1Keypoints, ptpairs[i] );
+        CvSURFPoint* f2 = (CvSURFPoint*)cvGetSeqElem( img2Keypoints, ptpairs[i+1] );
+        qDebug() << "i:" << i << ", Hessian:" << f1->hessian << ", Laplacian:" << f1->laplacian << ", Size:" << f1->size << ", Dir:" << f1->dir;
+        qDebug() << "i:" << i+1 << ", Hessian:" << f2->hessian << ", Laplacian:" << f2->laplacian << ", Size:" << f2->size << ", Dir:" << f2->dir;
+        qDebug() << "-------";
+    }
+}

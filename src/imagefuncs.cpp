@@ -107,6 +107,63 @@ void ImageFuncs::ratioResize(IplImage* &img1, IplImage* &img2)
     }
 }
 
+double ImageFuncs::rgbRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y)
+{
+    int objx = img1x;
+    int objy = img1y;
+    int objw = qImg1->width();
+    int objh = qImg1->height();
+    double dist;
+    double maxDist = 0;
+    double pixAcc = 0;
+    double rms = 1;
+
+    if(VERBOSE)
+        cout << "Iniciando calculo RMS:" << endl << "Desplazamiento de la imagen 1 con respecto a la imagen 2: (" << img1x << ", " << img1y << ")" << endl;
+
+    //En caso de que la imagen 1 se encuentre desplazada negativamente con respecto a la imagen 2,
+    //la region sobrante de la primera es recortada.
+    if(objx < 0){
+        *qImg1 = qImg1->copy(objx*(-1), 0, qImg1->width()+objx, qImg1->height());
+        objx = 0;
+        objw = qImg1->width();
+    }
+    if(objy < 0){
+        *qImg1 = qImg1->copy(0, objy*(-1), qImg1->width(), qImg1->height()+objy);
+        objy = 0;
+        objh = qImg1->height();
+    }
+    //Se realiza el cálculo RMS teniendo en cuenta el desplazamiento en (x, y) de la imagen 1.
+    int i=objx, j=objy;
+    int initi=i, initj=j;
+
+    if(!(qImg2->width() < objx || qImg2->height() < objy)){
+        for(i=objx; i<objx+objw; i++){
+            for(j=objy; j<objy+objh; j++){
+                if(i<qImg2->width() && j<qImg2->height()){
+                    dist = 0;
+                    dist += pow(qRed(qImg1->pixel(i-objx, j-objy)) - qRed(qImg2->pixel(i, j)), 2);
+                    dist += pow(qBlue(qImg1->pixel(i-objx, j-objy)) - qBlue(qImg2->pixel(i, j)), 2);
+                    dist += pow(qGreen(qImg1->pixel(i-objx, j-objy)) - qGreen(qImg2->pixel(i, j)), 2);
+
+                    pixAcc += dist;
+                    if(dist > maxDist) maxDist = dist;
+                }
+            }
+        }
+        if((pixAcc > 0) && ((i-initi)*(j-initj) > 0)){
+            rms = sqrt(pixAcc / (3*(i-initi)*(j-initj)));    //Se promedia la distancia acumulada.
+            rms = rms/255;
+        }
+    }
+    if(VERBOSE){
+        qDebug() << "Dimension de la region analizada en el calculo:" << i-initi << "x" << j-initj;
+        qDebug() << "Maxima distancia:" << maxDist << endl;
+        qDebug() << "RMS normalizado:" << rms << endl;
+    }
+    return rms;
+}
+
 double ImageFuncs::yiqRms(IplImage* img1, IplImage* img2)
 {
     uchar* data1 = (uchar*)img1->imageData;
@@ -167,26 +224,31 @@ double ImageFuncs::yiqRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y)
     if(objx < 0){
         *qImg1 = qImg1->copy(objx*(-1), 0, qImg1->width()+objx, qImg1->height());
         objx = 0;
+        objw = qImg1->width();
     }
     if(objy < 0){
         *qImg1 = qImg1->copy(0, objy*(-1), qImg1->width(), qImg1->height()+objy);
         objy = 0;
-    }
+        objh = qImg1->height();
+    }    
     //Se realiza el cálculo RMS teniendo en cuenta el desplazamiento en (x, y) de la imagen 1.
     int i=objx, j=objy;
     int initi=i, initj=j;
+
     if(!(qImg2->width() < objx || qImg2->height() < objy)){
         for(i=objx; i<objx+objw; i++){
             for(j=objy; j<objy+objh; j++){
                 if(i<qImg2->width() && j<qImg2->height()){
-                    dist = ImageFuncs::yiqDiff(qImg1->pixel(i-objx, j-objy), qImg2->pixel(i, j));
+                    dist = ImageFuncs::yiqDiff(qImg1->pixel(i-objx, j-objy), qImg2->pixel(i, j));                    
                     pixAcc += pow(dist, 2);                    
                     if(dist > maxDist) maxDist = dist;
                 }
             }
         }
-        rms = sqrt(pixAcc / ((i-initi)*(j-initj)));    //Se promedia la distancia acumulada.        
-        rms = rms / MAX_DIFF;
+        if((pixAcc > 0) && ((i-initi)*(j-initj) > 0)){
+            rms = sqrt(pixAcc / ((i-initi)*(j-initj)));    //Se promedia la distancia acumulada.           
+            rms = rms / MAX_DIFF;           
+        }
     }
     if(VERBOSE){
         qDebug() << "Dimension de la region analizada en el calculo:" << i-initi << "x" << j-initj;

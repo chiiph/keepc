@@ -86,7 +86,9 @@ public:
 
     static void getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors);
 
-    static int getHashKey(IplImage* img);
+    static QList<int> getHessians(IplImage* img);
+
+    static void filterByDirection(CvSeq* img1Keypoints, CvSeq* img2Keypoints, vector<int> &ptpairs);
 
 private:
 
