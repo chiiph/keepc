@@ -17,7 +17,7 @@ void Utils::loadImages(char* path1, char* path2, IplImage* &img1, IplImage* &img
 IplImage* Utils::loadImage(char* path, bool GRAYSCALE, bool QIMG)
 {
     IplImage* img = NULL;
-    if(QIMG){
+    if(QString(path).endsWith(".gif", Qt::CaseInsensitive)){
         QImage *qImg = new QImage(path);
         if(qImg->height() == 0 || qImg->width() == 0){
             qDebug() << "Imagen no encontrada o error en la carga de:" << path;
@@ -26,7 +26,9 @@ IplImage* Utils::loadImage(char* path, bool GRAYSCALE, bool QIMG)
         if(GRAYSCALE)
             img = Utils::qtToCvGrayscale(qImg);
         else
-            img = Utils::qtToCv(new QImage(path));
+            //img = Utils::qtToCv(new QImage(path));
+            img = Utils::qtToCv(qImg);
+        delete qImg;
     }else{
         if(GRAYSCALE)
             img = cvLoadImage(path, CV_LOAD_IMAGE_GRAYSCALE);
@@ -53,6 +55,7 @@ IplImage* Utils::qtToCv(QImage *qImage)
     cvImage->imageData = (char*)qImage->bits();
     IplImage* colorImage = cvCreateImage( cvGetSize(cvImage), IPL_DEPTH_8U, 3 );
     cvConvertImage( cvImage, colorImage );
+    cvReleaseImage(&cvImage);
     return colorImage;
 }
 
@@ -225,8 +228,12 @@ void Utils::printPairsInfo(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<in
     for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
         CvSURFPoint* f1 = (CvSURFPoint*)cvGetSeqElem( img1Keypoints, ptpairs[i] );
         CvSURFPoint* f2 = (CvSURFPoint*)cvGetSeqElem( img2Keypoints, ptpairs[i+1] );
-        qDebug() << "i:" << i << ", Hessian:" << f1->hessian << ", Laplacian:" << f1->laplacian << ", Size:" << f1->size << ", Dir:" << f1->dir;
-        qDebug() << "i:" << i+1 << ", Hessian:" << f2->hessian << ", Laplacian:" << f2->laplacian << ", Size:" << f2->size << ", Dir:" << f2->dir;
+        qDebug() << "i:" << ptpairs[i];// << ", Hessian:" << f1->hessian << ", Laplacian:" << f1->laplacian << ", Size:" << f1->size << ", Dir:" << f1->dir;
+        qDebug() << "i:" << ptpairs[i+1];// << ", Hessian:" << f2->hessian << ", Laplacian:" << f2->laplacian << ", Size:" << f2->size << ", Dir:" << f2->dir;
         qDebug() << "-------";
     }
+}
+
+double Utils::trace(QTransform tr){
+    return tr.m11() + tr.m22() + tr.m33();
 }

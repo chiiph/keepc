@@ -161,6 +161,8 @@ double ImageFuncs::rgbRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y)
         qDebug() << "Maxima distancia:" << maxDist << endl;
         qDebug() << "RMS normalizado:" << rms << endl;
     }
+    //delete qImg1;
+    //delete qImg2;
     return rms;
 }
 
@@ -245,16 +247,21 @@ double ImageFuncs::yiqRms(QImage* qImg1, QImage* qImg2, int img1x, int img1y)
                 }
             }
         }
-        if((pixAcc > 0) && ((i-initi)*(j-initj) > 0)){
-            rms = sqrt(pixAcc / ((i-initi)*(j-initj)));    //Se promedia la distancia acumulada.           
-            rms = rms / MAX_DIFF;           
+        if(pixAcc > 0){
+            if((i-initi)*(j-initj) > 0){
+                rms = sqrt(pixAcc / ((i-initi)*(j-initj)));    //Se promedia la distancia acumulada.
+                rms = rms / MAX_DIFF;
+            }
+        }
+        else{
+            rms = 0;
         }
     }
     if(VERBOSE){
         qDebug() << "Dimension de la region analizada en el calculo:" << i-initi << "x" << j-initj;
         qDebug() << "Maxima distancia:" << maxDist << endl;
         qDebug() << "RMS normalizado:" << rms << endl;
-    }
+    }    
     return rms;
 }
 
@@ -281,7 +288,8 @@ double ImageFuncs::resizeBasedRMS(IplImage* &img1, IplImage* &img2){
 //    Utils::show("img2Final", img2);
 //    cvWaitKey(0);
 //    cvDestroyAllWindows();
-
+    delete qImg1;
+    delete qImg2;
     return v;
 }
 
@@ -314,14 +322,38 @@ bool ImageFuncs::featuresBasedRMS(double &result, IplImage* img1, IplImage* img2
     if(qImg2->width() < transform.dx() || qImg2->height() < transform.dy()){
         if(VERBOSE)
             cout << "El desplazamiento generado por la transformacion genera un area para el calculo RMS nula." << endl << endl;
+        delete qImg1;
+        delete qImg2;
         return false;
     }
     double rms = ImageFuncs::yiqRms(qImg1, qImg2, transform.dx(), transform.dy());
     double x = Utils::linearRangeMap(rms);
     result = Utils::sigmoidal(x);
 
-    qImg1->~QImage();
-    qImg2->~QImage();
+    delete qImg1;
+    delete qImg2;    
 
     return true;
+}
+
+QString ImageFuncs::closer(QString path, QStringList paths){
+    double lowest = 1;
+    double result = 0;
+    QString closerImage = "";
+    IplImage *img1=NULL, *img1C=NULL, *img2=NULL, *img2C=NULL;
+    img1 = Utils::loadImage(path.toAscii().data(), true);
+    img1C = Utils::loadImage(path.toAscii().data(), false);
+    for(int i=0; i<paths.count(); i++){
+        img2 = Utils::loadImage(paths[i].toAscii().data(), true);
+        img2C = Utils::loadImage(paths[i].toAscii().data(), false);
+        if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
+            result = ImageFuncs::resizeBasedRMS(img1C, img2C);
+        if(result < lowest){
+            lowest = result;
+            closerImage = paths[i];
+        }
+        cvReleaseImage(&img2);
+        cvReleaseImage(&img2C);
+    }
+    return closerImage;
 }

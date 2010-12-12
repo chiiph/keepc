@@ -243,12 +243,32 @@ bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, const CvSe
     return res1 && res2;
 }
 
+bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, vector<int> &ptpairs){
+    if(imgTri[0] == imgTri[1])
+        for(int i=0; i<(int)ptpairs.size(); i+=2){
+            if(ptpairs[i] == objTri[1] && ptpairs[i+1] == imgTri[1]){
+                qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
+                ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);                
+                return false;
+        }
+    }
+    if(imgTri[0] == imgTri[2] || imgTri[1] == imgTri[2])
+        for(int i=0; i<(int)ptpairs.size(); i+=2){
+            if(ptpairs[i] == objTri[2] && ptpairs[i+1] == imgTri[2]){
+                qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
+                ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);
+                return false;
+            }
+        }
+    return true;
+}
+
 void Features::removeMatch(const CvSeq* objectKeypoints, vector<int> &ptpairs, int pt)
 {
     //Se remueve del conjunto de pares tanto el punto indicado por "pt" de la imagen 1,
     //como el punto correspondiente de la imagen 2.
-    for(int i = 0; i < (int)ptpairs.size(); i+=2 ){
-        CvSURFPoint* spt = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, pt );
+    CvSURFPoint* spt = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, pt );
+    for(int i = 0; i < (int)ptpairs.size(); i+=2 ){        
         CvSURFPoint* v1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, ptpairs[i] );
         if(v1->pt.x == spt->pt.x && v1->pt.y == spt->pt.y){
             ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);
@@ -265,13 +285,17 @@ bool Features::findGoodTriangles(const CvSeq* objectKeypoints, const CvSeq* imag
     while(!goodTriangle){
         objTri = getTriangle(objectKeypoints, ptpairs);
         imgTri = getMatchingTriangle(objectKeypoints, objTri, ptpairs);
+        goodTriangle = checkTriangles(objTri, imgTri, ptpairs);
+        if(!goodTriangle) qDebug() << "Bad triangle.";
         //goodTriangle = checkTriangles(objTri, imgTri, objectKeypoints, imageKeypoints, objSize, index);
-        goodTriangle = true;
-        if(!goodTriangle)
-           removeMatch(objectKeypoints, ptpairs, objTri[index]);
-        //cout << ptpairs.size() << endl;
+        //goodTriangle = true;
+        //if(!goodTriangle)
+        //   removeMatch(objectKeypoints, ptpairs, objTri[index]);
+        cout << ptpairs.size() << endl;
+        if(ptpairs.size()/2 < MINPAIRS)
+            return false;
     }
-    if(VERBOSE){
+    if(goodTriangle && VERBOSE){
         cout << "Descriptores del triangulo de la imagen 1: <" << objTri[0] << ", " << objTri[1] << ", " << objTri[2] << ">" << endl;
         cout << "Descriptores del triangulo de la imagen 2: <" << imgTri[0] << ", " << imgTri[1] << ", " << imgTri[2] << ">" << endl << endl;
     }
@@ -315,17 +339,74 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
                 ((x12-x22)*(x11-x31)-(x12-x32)*(x11-x21));
     double a6 = y12-a4*x11-a5*x12;
 
+    a1 = round(a1*1000)/1000.0;
+    a2 = round(a2*1000)/1000.0;
+    a3 = round(a3*1000)/1000.0;
+    a4 = round(a4*1000)/1000.0;
+    a5 = round(a5*1000)/1000.0;
+    a6 = round(a6*1000)/1000.0;
+
     if(VERBOSE)
         cout << "Transformacion hallada: [" << a1 << ", " << a4 << ", 0, " << a2 << ", " << a5 << ", 0, " << a3 << ", " << a6 << ", 1]" << endl << endl;
 
-    return QTransform(a1, a4, 0, a2, a5, 0, a3, a6);
+    QTransform tr = QTransform(a1, a4, 0, a2, a5, 0, a3, a6);
+//    qDebug() << "m11:" << tr.m11();
+//    qDebug() << "m22:" << tr.m22();
+
+    return tr;
+}
+
+bool Features::checkEigenvalues(QTransform tr){
+
+    double eig1, eig2, eig3, minDist;
+
+    QString program = "./eig/eig.exe";
+    QStringList arguments;
+    arguments << QString::number(tr.m11());
+    arguments << QString::number(tr.m12());
+    arguments << QString::number(tr.m13());
+    arguments << QString::number(tr.m21());
+    arguments << QString::number(tr.m22());
+    arguments << QString::number(tr.m23());
+    arguments << QString::number(tr.m31());
+    arguments << QString::number(tr.m32());
+    arguments << QString::number(tr.m33());   
+
+    QProcess *eig = new QProcess();
+    eig->start(program, arguments);
+    eig->waitForFinished();    
+
+    QString line;
+    line = eig->readLine();
+    eig1 = line.left(line.indexOf('.') + 5).remove('\n').toDouble();
+    line = eig->readLine();    
+    eig2 = line.left(line.indexOf('.') + 5).remove('\n').toDouble();
+    line = eig->readLine();    
+    eig3 = line.left(line.indexOf('.') + 5).remove('\n').toDouble();
+    qDebug() << "Eig1:" << eig1 << "| Eig2:" << eig2 << "| Eig3:" << eig3 << endl;
+
+    minDist = abs(eig1 - eig2);
+    if(abs(eig1 - eig3) < minDist) minDist = abs(eig1 - eig3);
+    if(abs(eig2 - eig3) < minDist) minDist = abs(eig2 - eig3);
+    qDebug() << "MinDist:" << minDist;
+
+    return minDist <= 0.5;
 }
 
 void Features::getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors){
     keypoints=0; descriptors=0;
     CvMemStorage* storage = cvCreateMemStorage(0);
     CvSURFParams params = cvSURFParams(500, 1);
-    cvExtractSURF(img, 0, &keypoints, &descriptors, storage, params);
+    cvExtractSURF(img, 0, &keypoints, &descriptors, storage, params);    
+}
+
+int Features::getHashKey(IplImage *img){
+    CvSeq *keypoints=0, *descriptors=0;
+    Features::getFeatures(img, keypoints, descriptors);    
+    qDebug() << "Features:" << keypoints->total;
+    int key = (int)floor(sqrt(keypoints->total));
+    cvReleaseMemStorage(&descriptors->storage);    
+    return key;
 }
 
 QList<int> Features::getHessians(IplImage *img){
@@ -355,7 +436,7 @@ void Features::filterByDirection(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vec
         if(dir1 > dir2)
             dir2 += 360;
         hist[dir2 - dir1]++;
-        dirDiff += dir2 - dir1;
+        dirDiff += dir2 - dir1;        
     }
     dirDiff = dirDiff / (ptpairs.size()/2);
     //qDebug() << "Diferencia de direcciones promedio:" << dirDiff;
@@ -384,7 +465,7 @@ void Features::filterByDirection(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vec
 }
 
 bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImage* img1, IplImage* img2, QTransform &transform)
-{
+{    
     CvMemStorage* storage = cvCreateMemStorage(0);
 
     //Búsqueda de features para ambas imágenes.
@@ -393,7 +474,7 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
     CvSURFParams params = cvSURFParams(500, 1);
     double tt = (double)cvGetTickCount();
     cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params );
-    cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );
+    cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );    
     tt = (double)cvGetTickCount() - tt;
     if(VERBOSE){
         qDebug() << "Features hallados en la imagen 1:" << objectDescriptors->total;
@@ -404,18 +485,20 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
     //En caso de ser insuficiente la cantidad de features para alguna de las imágenes, se retorna sin resultado.
     if(objectKeypoints->total < MINPAIRS || imageKeypoints->total < MINPAIRS){
         if(VERBOSE)
-            qDebug() << "La cantidad de features encontrados es insuficiente para calcular una transformacion." << endl;
+            qDebug() << "La cantidad de features encontrados es insuficiente para calcular una transformacion." << endl;       
+        cvReleaseMemStorage(&storage);
         return false;
     }
 
     //Busqueda de correspondencia entre puntos característicos (features).
     vector<int> ptpairs;
-#ifdef USE_FLANN
-    Features::flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#else
-    Features::findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#endif
+    #ifdef USE_FLANN
+        Features::flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+    #else
+        Features::findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+    #endif
 
+    //Utils::printPairsInfo(objectKeypoints, imageKeypoints, ptpairs);
     /**************************************************************************************************************/
     Features::filterByDirection(objectKeypoints, imageKeypoints, ptpairs);
     /**************************************************************************************************************/
@@ -425,7 +508,8 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
         qDebug() << "Cantidad de puntos de correspondencia:" << (int)(ptpairs.size()/2) << endl;
     if(ptpairs.size()/2 < MINPAIRS){
         if(VERBOSE)
-            qDebug() << "La cantidad de puntos de correspondencia entre las imagenes es insuficiente para calcular una transformacion." << endl;
+            qDebug() << "La cantidad de puntos de correspondencia entre las imagenes es insuficiente para calcular una transformacion." << endl;        
+        cvReleaseMemStorage(&storage);
         return false;
     }    
 
@@ -440,20 +524,34 @@ bool Features::featuresBasedTransform(IplImage* object, IplImage* image, IplImag
     //En caso de no hallarse los triángulos de manera satisfactoria, se retorna sin resultado.
     if(!goodTriangle){
         if(VERBOSE)
-            qDebug() << "Los triangulos de correspondencia hallados no permiten realizar una transformacion correcta." << endl;
+            qDebug() << "Los triangulos de correspondencia hallados no permiten realizar una transformacion correcta." << endl;        
+        cvReleaseMemStorage(&storage);
         return false;
     }
 
     //Se procede a calcular la transformación.
     transform = getTransformation(objectKeypoints, imageKeypoints, objTri, imgTri);
 
+    //EIGENVALUES**************************************************************************************************************
+    //Features::checkEigenvalues(QTransform(0.0, 1.5, -1.0, 1.5, 1.0, 0.0, -1.0, 0.0, 1.0));
+    if(!Features::checkEigenvalues(transform)){
+        if(VERBOSE)
+            qDebug() << "Los triangulos de correspondencia hallados no permiten realizar una transformacion correcta." << endl;        
+        cvReleaseMemStorage(&storage);
+        return false;
+    }
+
     if(GRAPHIC){
         IplImage* result = Utils::drawResultImage(img1, img2, objectKeypoints, imageKeypoints, objTri, imgTri, ptpairs);
         cvNamedWindow("Imagen de correspondencia", 1);
         cvMoveWindow("Imagen de correspondencia", 100, 100);
         cvShowImage("Imagen de correspondencia", result);
-        cvWaitKey(0);
+        cvWaitKey(0);        
         cvDestroyAllWindows();
+        cvReleaseImage(&result);
     }
+
+    cvReleaseMemStorage(&storage);
+
     return true;
 }

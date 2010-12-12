@@ -3,6 +3,7 @@
 #define ANGLEDELTA 8
 #define PI 3.14159
 #define MINPAIRS 3
+#define BUCKET_WIDTH 25
 #define USE_FLANN
 #include <cv.h>
 #include <highgui.h>
@@ -66,6 +67,8 @@ public:
      */
     static bool checkTriangles(vector<int> objTri, vector<int> imgTri, const CvSeq* objectKeypoints, const CvSeq* imageKeypoints, vector<int> objSize, int &index);
 
+    static bool checkTriangles(vector<int> objTri, vector<int> imgTri, vector<int> &ptpairs);
+
     /*!
      * Halla, en caso de ser posible, los triángulos de correspondencia entre las imágenes, lo que permitirá calcular
      * y aplicar la transformación más conveniente.
@@ -89,6 +92,10 @@ public:
     static QList<int> getHessians(IplImage* img);
 
     static void filterByDirection(CvSeq* img1Keypoints, CvSeq* img2Keypoints, vector<int> &ptpairs);
+
+    static int getHashKey(IplImage* img);
+
+    static bool checkEigenvalues(QTransform tr);
 
 private:
 

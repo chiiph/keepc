@@ -91,6 +91,8 @@ public:
 
     static void printPairsInfo(CvSeq *img1Keypoints, CvSeq *img2Keypoints, vector<int> ptpairs);
 
+    static double trace(QTransform tr);
+
 private:
 
     static bool VERBOSE;

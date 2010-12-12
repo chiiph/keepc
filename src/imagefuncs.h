@@ -59,6 +59,8 @@ public:
 
     static double yiqDiff(QRgb pix1, QRgb pix2);
 
+    static QString closer(QString path, QStringList paths);
+
 
 
 private:

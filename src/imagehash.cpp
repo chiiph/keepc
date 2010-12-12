@@ -8,9 +8,47 @@ ImageHash::ImageHash(QString dbName){
         exit(1);
     }
     this->query = QSqlQuery(this->db);
-    this->model = new QSqlQueryModel();
-    this->create();        
+    this->model = new QSqlQueryModel();     
 }
+
+//HASH CON BUCKET = SQRT(#FEATURES)
+void ImageHash::create(int bucket){
+    QString queryStr = "CREATE TABLE IF NOT EXISTS bucket" + QString::number(bucket) + " ( path VARCHAR(200), PRIMARY KEY (path))";
+    qDebug() << queryStr;
+    this->query.prepare(queryStr);    
+    if(!this->query.exec())
+        qDebug() << "Error en la creacion de la tabla \"bucket" + QString::number(bucket) + "\".";
+}
+
+void ImageHash::insert(QString path, int key){
+    QString queryStr;
+    if(key > LAST_BUCKET)
+        key = LAST_BUCKET;
+    this->create(key);
+    queryStr = "SELECT path FROM bucket" + QString::number(key) + " WHERE path='" + path + "'";
+    qDebug() << queryStr;
+    this->model->setQuery(queryStr);
+    if(this->model->rowCount() > 0)
+        return;
+    queryStr = "INSERT INTO bucket" + QString::number(key) + " VALUES ('" + path + "')";
+    qDebug() << queryStr;
+    this->query.prepare(queryStr);
+    if(!this->query.exec())
+        qDebug() << "Error en la insercion de la imagen " + path + ":" << query.lastError().driverText() << "," << query.lastError().databaseText();
+}
+
+QStringList ImageHash::select(int key){
+    QStringList paths = QStringList();    
+    QString queryStr = "SELECT path FROM bucket" + QString::number(key);
+    qDebug() << queryStr;
+    this->model->setQuery(queryStr);
+    for(int i=0; i<this->model->rowCount(); i++)
+        paths << this->model->record(i).value("path").toString();    
+    return paths;
+}
+
+
+/*HASH QUE ALMACENA EL HESSIANO DE "HASH_DEPTH" FEATURES
 
 void ImageHash::create(){    
     QString queryStr = "CREATE TABLE IF NOT EXISTS hash ( path VARCHAR(50), ";
@@ -55,18 +93,5 @@ QStringList ImageHash::select(QList<int> hessians){
     }
     return paths;
 }
-
-/*
-QStringList ImageHash::getMatchs(int key){
-    QStringList paths = QStringList();
-    int i=0, currentKey=0;
-    this->select();    
-    while(i<this->model->rowCount() && currentKey<=key){
-        currentKey = this->model->record(i).value("key").toInt();
-        if(key == currentKey)
-            paths << this->model->record(i).value("path").toString();
-        i++;
-    }
-    return paths;
-}
 */
+

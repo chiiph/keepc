@@ -3,17 +3,19 @@
 #include <QString>
 #include <QtSql>
 #include <QDebug>
-#define HASH_DEPTH 10
-#define SEARCH_DEPTH 5
+#define LAST_BUCKET 100000
 
 class ImageHash
 {
 public:    
 
-    ImageHash(QString dbName = "db\\hash.db");
+    ImageHash(QString dbName = "db/hash.db");
     void create();
+    void create(int bucket);
     void insert(QString path, QList<int> hessians);
+    void insert(QString path, int key);
     QStringList select(QList<int> hessians);
+    QStringList select(int key);
     QStringList getMatchs(int key);
 
 private:
