@@ -336,24 +336,31 @@ bool ImageFuncs::featuresBasedRMS(double &result, IplImage* img1, IplImage* img2
     return true;
 }
 
-QString ImageFuncs::closer(QString path, QStringList paths){
-    double lowest = 1;
-    double result = 0;
-    QString closerImage = "";
+void ImageFuncs::closer(QString path, QStringList paths, QString &closerPath, double &closerRMS, bool &contains){
+    closerRMS = 1;
+    closerPath = "";
+    double result;
     IplImage *img1=NULL, *img1C=NULL, *img2=NULL, *img2C=NULL;
     img1 = Utils::loadImage(path.toAscii().data(), true);
-    img1C = Utils::loadImage(path.toAscii().data(), false);
+    img1C = Utils::loadImage(path.toAscii().data(), false);    
     for(int i=0; i<paths.count(); i++){
-        img2 = Utils::loadImage(paths[i].toAscii().data(), true);
-        img2C = Utils::loadImage(paths[i].toAscii().data(), false);
-        if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
-            result = ImageFuncs::resizeBasedRMS(img1C, img2C);
-        if(result < lowest){
-            lowest = result;
-            closerImage = paths[i];
+        result = 1;        
+        img2 = Utils::loadImageNoExit(paths[i].toAscii().data(), true);
+        img2C = Utils::loadImageNoExit(paths[i].toAscii().data(), false);
+        if(path != paths[i] && img2 != NULL && img2C != NULL){
+            if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
+                result = ImageFuncs::resizeBasedRMS(img1C, img2C);
+            if(result <= 0.0474259){
+                contains = true;
+            }else{
+                if(result < closerRMS){
+                    closerRMS = result;
+                    closerPath = paths[i];
+                }
+            }
+            //qDebug() << paths[i] << ":" << QString::number(result);
         }
         cvReleaseImage(&img2);
         cvReleaseImage(&img2C);
-    }
-    return closerImage;
+    }    
 }

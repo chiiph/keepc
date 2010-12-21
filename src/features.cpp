@@ -247,7 +247,7 @@ bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, vector<int
     if(imgTri[0] == imgTri[1])
         for(int i=0; i<(int)ptpairs.size(); i+=2){
             if(ptpairs[i] == objTri[1] && ptpairs[i+1] == imgTri[1]){
-                qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
+                //qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
                 ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);                
                 return false;
         }
@@ -255,7 +255,7 @@ bool Features::checkTriangles(vector<int> objTri, vector<int> imgTri, vector<int
     if(imgTri[0] == imgTri[2] || imgTri[1] == imgTri[2])
         for(int i=0; i<(int)ptpairs.size(); i+=2){
             if(ptpairs[i] == objTri[2] && ptpairs[i+1] == imgTri[2]){
-                qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
+                //qDebug() << "Obj:" << ptpairs[i] << "| Img:" << ptpairs[i+1];
                 ptpairs.erase(ptpairs.begin()+i, ptpairs.begin()+i+2);
                 return false;
             }
@@ -286,12 +286,12 @@ bool Features::findGoodTriangles(const CvSeq* objectKeypoints, const CvSeq* imag
         objTri = getTriangle(objectKeypoints, ptpairs);
         imgTri = getMatchingTriangle(objectKeypoints, objTri, ptpairs);
         goodTriangle = checkTriangles(objTri, imgTri, ptpairs);
-        if(!goodTriangle) qDebug() << "Bad triangle.";
+        //if(!goodTriangle) qDebug() << "Bad triangle.";
         //goodTriangle = checkTriangles(objTri, imgTri, objectKeypoints, imageKeypoints, objSize, index);
         //goodTriangle = true;
         //if(!goodTriangle)
         //   removeMatch(objectKeypoints, ptpairs, objTri[index]);
-        cout << ptpairs.size() << endl;
+        //cout << ptpairs.size() << endl;
         if(ptpairs.size()/2 < MINPAIRS)
             return false;
     }
@@ -359,6 +359,7 @@ QTransform Features::getTransformation(const CvSeq* objectKeypoints, const CvSeq
 bool Features::checkEigenvalues(QTransform tr){
 
     double eig1, eig2, eig3, minDist;
+    //qDebug() << "EIGENVALUES";
 
     QString program = "./eig/eig.exe";
     QStringList arguments;
@@ -383,12 +384,12 @@ bool Features::checkEigenvalues(QTransform tr){
     eig2 = line.left(line.indexOf('.') + 5).remove('\n').toDouble();
     line = eig->readLine();    
     eig3 = line.left(line.indexOf('.') + 5).remove('\n').toDouble();
-    qDebug() << "Eig1:" << eig1 << "| Eig2:" << eig2 << "| Eig3:" << eig3 << endl;
+    //qDebug() << "Eig1:" << eig1 << "| Eig2:" << eig2 << "| Eig3:" << eig3;
 
     minDist = abs(eig1 - eig2);
     if(abs(eig1 - eig3) < minDist) minDist = abs(eig1 - eig3);
     if(abs(eig2 - eig3) < minDist) minDist = abs(eig2 - eig3);
-    qDebug() << "MinDist:" << minDist;
+    //qDebug() << "MinDist:" << minDist;
 
     return minDist <= 0.5;
 }
@@ -403,7 +404,7 @@ void Features::getFeatures(IplImage* img, CvSeq* &keypoints, CvSeq* &descriptors
 int Features::getHashKey(IplImage *img){
     CvSeq *keypoints=0, *descriptors=0;
     Features::getFeatures(img, keypoints, descriptors);    
-    qDebug() << "Features:" << keypoints->total;
+    //qDebug() << "Features:" << keypoints->total;
     int key = (int)floor(sqrt(keypoints->total));
     cvReleaseMemStorage(&descriptors->storage);    
     return key;

@@ -14,10 +14,12 @@ ImageHash::ImageHash(QString dbName){
 //HASH CON BUCKET = SQRT(#FEATURES)
 void ImageHash::create(int bucket){
     QString queryStr = "CREATE TABLE IF NOT EXISTS bucket" + QString::number(bucket) + " ( path VARCHAR(200), PRIMARY KEY (path))";
-    qDebug() << queryStr;
+    //qDebug() << queryStr;
     this->query.prepare(queryStr);    
-    if(!this->query.exec())
-        qDebug() << "Error en la creacion de la tabla \"bucket" + QString::number(bucket) + "\".";
+    if(!this->query.exec()){
+        qDebug() << "Error en la creacion de la tabla \"bucket" + QString::number(bucket) + "\"." << endl;
+        exit(1);
+    }
 }
 
 void ImageHash::insert(QString path, int key){
@@ -26,25 +28,53 @@ void ImageHash::insert(QString path, int key){
         key = LAST_BUCKET;
     this->create(key);
     queryStr = "SELECT path FROM bucket" + QString::number(key) + " WHERE path='" + path + "'";
-    qDebug() << queryStr;
+    //qDebug() << queryStr;
     this->model->setQuery(queryStr);
     if(this->model->rowCount() > 0)
         return;
     queryStr = "INSERT INTO bucket" + QString::number(key) + " VALUES ('" + path + "')";
-    qDebug() << queryStr;
+    //qDebug() << queryStr;
     this->query.prepare(queryStr);
-    if(!this->query.exec())
-        qDebug() << "Error en la insercion de la imagen " + path + ":" << query.lastError().driverText() << "," << query.lastError().databaseText();
+    if(!this->query.exec()){
+        qDebug() << "Error en la insercion de la imagen" + path + "\"." << endl;
+        exit(1);
+    }
 }
 
 QStringList ImageHash::select(int key){
     QStringList paths = QStringList();    
     QString queryStr = "SELECT path FROM bucket" + QString::number(key);
-    qDebug() << queryStr;
+    //qDebug() << queryStr;
     this->model->setQuery(queryStr);
     for(int i=0; i<this->model->rowCount(); i++)
         paths << this->model->record(i).value("path").toString();    
     return paths;
+}
+
+void ImageHash::featuresCountInsert(QString path){
+    IplImage *img = Utils::loadImage(path.toAscii().data(), true);
+    int key = Features::getHashKey(img);
+    this->insert(path, key);
+    cvReleaseImage(&img);
+    qDebug() << "Imagen insertada con exito.";
+}
+
+void ImageHash::featuresCountSearch(QString path){
+    double closerRMS = 1;
+    QString closerPath = "";
+    bool contains = false;
+    IplImage *img = Utils::loadImage(path.toAscii().data(), true);
+    int key = Features::getHashKey(img);
+    QStringList images = this->select(key);
+    qDebug() << "Buscando imagenes similares..." << endl;
+    ImageFuncs::closer(path, images, closerPath, closerRMS, contains);
+    if(!contains)
+        this->insert(path, key);
+    if(closerPath == "")
+        qDebug() << "No hay registradas imagenes similares (que difieran de la ingresada).";
+    else
+        cout << "La imagen registrada de mayor similitud es \"" << closerPath.toAscii().data() << "\", con un valor de " << closerRMS << "." << endl;
+    cvReleaseImage(&img);   
 }
 
 

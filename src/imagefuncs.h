@@ -59,7 +59,7 @@ public:
 
     static double yiqDiff(QRgb pix1, QRgb pix2);
 
-    static QString closer(QString path, QStringList paths);
+    static void closer(QString path, QStringList paths, QString &closerPath, double &closerRMS, bool &contains);
 
 
 

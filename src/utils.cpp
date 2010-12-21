@@ -42,6 +42,27 @@ IplImage* Utils::loadImage(char* path, bool GRAYSCALE, bool QIMG)
     return img;
 }
 
+IplImage* Utils::loadImageNoExit(char* path, bool GRAYSCALE)
+{
+    IplImage* img = NULL;
+    if(QString(path).endsWith(".gif", Qt::CaseInsensitive)){
+        QImage *qImg = new QImage(path);
+        if(!(qImg->height() == 0 || qImg->width() == 0)){
+            if(GRAYSCALE)
+                img = Utils::qtToCvGrayscale(qImg);
+            else                
+                img = Utils::qtToCv(qImg);
+        }
+        delete qImg;
+    }else{
+        if(GRAYSCALE)
+            img = cvLoadImage(path, CV_LOAD_IMAGE_GRAYSCALE);
+        else
+            img = cvLoadImage(path);
+    }    
+    return img;
+}
+
 QImage* Utils::cvToQt(IplImage *img)
 {
     QImage aux((uchar*) img->imageData , img->width, img->height, img->widthStep, QImage::Format_RGB888);

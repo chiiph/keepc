@@ -3,6 +3,9 @@
 #include <QString>
 #include <QtSql>
 #include <QDebug>
+#include "utils.h"
+#include "imagefuncs.h"
+#include "features.h"
 #define LAST_BUCKET 100000
 
 class ImageHash
@@ -17,6 +20,8 @@ public:
     QStringList select(QList<int> hessians);
     QStringList select(int key);
     QStringList getMatchs(int key);
+    void featuresCountInsert(QString path);
+    void featuresCountSearch(QString path);
 
 private:
 

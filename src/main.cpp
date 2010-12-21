@@ -14,6 +14,8 @@ using namespace std;
 
 bool VERBOSE = false;
 bool GRAPHIC = false;
+bool ADD = false;
+bool SEARCH = false;
 
 /*!
  * Imprime por pantalla el modo de uso de la aplicación.
@@ -21,11 +23,17 @@ bool GRAPHIC = false;
 void printHelp()
 {
     cout << endl << "El modo de uso de la aplicacion es el siguiente:" << endl << endl;
-    cout << "\tKeepcon imagen1 imagen2 [-v] [-g] [-h]" << endl << endl;
-    cout << "\t-v: la aplicacion imprime datos sobre el procesamiento." << endl;
-    cout << "\t-g: la aplicacion muestra la imagen de correspondencia hallada para las imagenes (si es posible)." << endl;
-    cout << "\t-h: muestra esta ayuda." << endl << endl;
-    cout << "\tLos argumentos pueden ser dispuestos en cualquier orden." << endl;
+    cout << "\t- Para realizar la comparacion de dos imagenes:" << endl << endl;
+    cout << "\t\tKeepcon imagen1 imagen2 [-v] [-g]" << endl << endl;
+    cout << "\t\t-v: la aplicacion imprime datos sobre el procesamiento." << endl;
+    cout << "\t\t-g: la aplicacion muestra la imagen de correspondencia hallada para las imagenes (en caso de ser posible)." << endl << endl;
+    cout << "\t\tLos argumentos pueden ser dispuestos en cualquier orden." << endl << endl;
+    cout << "\t- Para insertar una imagen en el hash:" << endl << endl;
+    cout << "\t\tKeepcon --add imagen" << endl << endl;
+    cout << "\t- Para buscar por similitud en el hash:" << endl << endl;
+    cout << "\t\tKeepcon --search imagen" << endl << endl;
+    cout << "\t- Para mostrar esta ayuda:" << endl << endl;
+    cout << "\t\tKeepcon -h." << endl << endl;
     exit(0);
 }
 
@@ -34,30 +42,46 @@ void printHelp()
  * En caso afirmativo, retorna los paths de las imágenes a procesar y setea los flags correspondientes.
  * En caso negativo, se imprime la ayuda por pantalla.
  */
-void checkCall(int argc, char *argv[], char* &path1, char* &path2)
+void checkCall(int argc, char *argv[], QString &path1, QString &path2)
 {
-    string arg;
-    QList<char*> qArgs;
+    QString arg;
+    QStringList qArgs;   
     for(int i=1; i<argc; i++)
-        qArgs << argv[i];
-    for(int i=0; i<qArgs.size(); i++){
-        arg = qArgs[i];
-        if(arg == "-h")
+        qArgs << QString(argv[i]).toLower();
+    if(qArgs.contains("-h"))
+        printHelp();
+    if(qArgs.contains("--add")){
+        ADD = true;
+        qArgs.removeOne("--add");
+        if(qArgs.size() != 1)
             printHelp();
-        if(arg == "-v"){
-            VERBOSE = true;
-            qArgs.removeAt(i--);
-            continue;
-        }
-        if(arg == "-g"){
-            GRAPHIC = true;
-            qArgs.removeAt(i--);
+        path1 = qArgs[0];
+    }else{
+        if(qArgs.contains("--search")){
+            SEARCH = true;
+            qArgs.removeOne("--search");
+            if(qArgs.size() != 1)
+                printHelp();
+            path1 = qArgs[0];
+        }else{
+            for(int i=0; i<qArgs.size(); i++){
+                arg = qArgs[i];                
+                if(arg == "-v"){
+                    VERBOSE = true;
+                    qArgs.removeAt(i--);
+                    continue;
+                }
+                if(arg == "-g"){
+                    GRAPHIC = true;
+                    qArgs.removeAt(i--);
+                }
+            }
+            if(qArgs.size() != 2)
+                printHelp();
+            path1 = qArgs[0];
+            path2 = qArgs[1];
         }
     }
-    if(qArgs.size() != 2)
-        printHelp();
-    path1 = qArgs[0];
-    path2 = qArgs[1];
 }
 
 /*!
@@ -79,23 +103,21 @@ int main(int argc, char *argv[])
     QStringList images;
     QString xml = "";
 
-    fileDirs << "auto" << "converse" << "doki" << "doki3" << "elmonito" << "flores";
-    //<< "flores2" << "kitty" << "kitty2" << "lisa" << "lisa2" << "lisa3" << "lisakunfu" << "pelotas" << "perroygato" << "pocobeat" << "pocoyo" << "pocoyotel" << "remera";
-    for(int i=0; i<fileDirs.count(); i++){
+    fileDirs << "auto" << "converse" << "doki" << "doki3" << "elmonito" << "flores" << "flores2" << "kitty" << "kitty2" << "lisa" << "lisa2" << "lisa3" << "lisakunfu" << "pelotas" << "perroygato" << "pocobeat" << "pocoyo" << "pocoyotel" << "remera";    for(int i=0; i<fileDirs.count(); i++){
         QDir dir(root + fileDirs[i] + "/");
         dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
         dir.setSorting(QDir::Name | QDir::Reversed);
         images << dir.entryList();
     }
+    QDir dir(root);
+    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+    dir.setSorting(QDir::Name);
+    images << dir.entryList();
+    qDebug() << images.count();
 
-//    QDir dir(root);
-//    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
-//    dir.setSorting(QDir::Name);
-//    images << dir.entryList();
-//    qDebug() << images.count();
-//    for(int i=0; i<images.count(); i++){
-//        qDebug() << images[i];
-//    }
+    for(int i=0; i<images.count(); i++){
+        qDebug() << images[i];
+    }
 
     xml = "<Row>\n    <Cell><Data ss:Type=\"String\">Imagen 1/Imagen 2</Data></Cell>\n";
     for(int i=0; i<images.count(); i++){
@@ -104,7 +126,7 @@ int main(int argc, char *argv[])
     xml += "</Row>\n";
 
     IplImage *img1, *img2, *img1C, *img2C;
-    QFile file("TEST-11-12-2010.xml");
+    QFile file("TEST-12-12-2010.xml");
     QTextStream out(&file);
 
     for(int i=0; i<images.count(); i++){
@@ -124,14 +146,10 @@ int main(int argc, char *argv[])
                 cvReleaseImage(&img2);
                 cvReleaseImage(&img1C);
                 cvReleaseImage(&img2C);
-//                delete img1;
-//                delete img2;
-//                delete img1C;
-//                delete img1C;
+                resStr = QString::number(result);
                 for(int k=1; k<4-(resStr.right(resStr.length() - resStr.indexOf('.'))).length(); k++)
                     resStr.append('0');
-                resStr = resStr.left(6);
-                resStr = QString::number(result);
+                resStr = resStr.left(6);                
                 qDebug() << result << endl;
             }
             xml += "    <Cell><Data ss:Type=\"String\">" + resStr + "</Data></Cell>\n";
@@ -144,67 +162,67 @@ int main(int argc, char *argv[])
     }
     */
 
+    /*
     //HASH #FEATURES
     IplImage *img;
     int key=0;    
     QStringList images;
     ImageHash hash = ImageHash();
-    QString root = "../img/keepcon2/";
+    QString root = "img/";
 
     QDir dir(root);
     dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
     dir.setSorting(QDir::Name | QDir::Reversed);
-    QStringList files = dir.entryList();
-    
-    for(int i=0; i<files.count(); i++){
-        img = Utils::loadImage((root + files[i]).toAscii().data(), true);
-        key = Features::getHashKey(img);
-        images = hash.select(key);
-        qDebug() << images;
-        hash.insert(root + files[i], key);
-        cvReleaseImage(&img);
-    }
+    QStringList files = dir.entryList();    
 
-    img = Utils::loadImage("../img/keepcon2/auto.jpg", true);
-    key = Features::getHashKey(img);
-    images = hash.select(key);
-    qDebug() << "Closer:" << ImageFuncs::closer("../img/keepcon2/auto.jpg", images);
-    hash.insert("../img/keepcon2/auto.jpg", key);
+    for(int i=0; i<files.count(); i++)
+        hash.featuresCountInsert((root + files[i]).toAscii().data());
+
+    hash.featuresCoundSearch("img/auto-t.jpg");
+    */
 
 
-    /*
-    //RMS
+    //GENERAL
     IplImage *img1=NULL, *img2=NULL, *img1C=NULL, *img2C=NULL;
-    char *path1, *path2;
+    QString path1, path2;
+    ImageHash hash = ImageHash();
 
     cout << endl;    
     checkCall(argc, argv, path1, path2);
-    Utils::loadImages(path1, path2, img1, img2, true);
-    Utils::loadImages(path1, path2, img1C, img2C);    
 
-    if(VERBOSE){
-        cout << "Imagenes originales:" << endl;
-        cout << "Imagen 1: " << img1->width << " x " << img1->height << " (" << path1 << ")" << endl;
-        cout << "Imagen 2: " << img2->width << " x " << img2->height << " (" << path2 << ")" << endl << endl;
-        ImageFuncs::setVerbose(true);
-        Features::setVerbose(true);
-        Utils::setVerbose(true);
+    if(ADD){
+        hash.featuresCountInsert(QString(path1));
+    }else{
+        if(SEARCH)
+            hash.featuresCountSearch(QString(path1));
+        else{
+            Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1, img2, true);
+            Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1C, img2C);           
+            if(VERBOSE){
+                cout << "Imagenes originales:" << endl;
+                cout << "Imagen 1: " << img1->width << " x " << img1->height << " (" << path1.toAscii().data() << ")" << endl;
+                cout << "Imagen 2: " << img2->width << " x " << img2->height << " (" << path2.toAscii().data() << ")" << endl << endl;
+                ImageFuncs::setVerbose(true);
+                Features::setVerbose(true);
+                Utils::setVerbose(true);
+            }
+            if(GRAPHIC)
+                Features::setGraphic(true);
+
+            double result = 1;
+            if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
+                result = ImageFuncs::resizeBasedRMS(img1C, img2C);
+
+            cout << "Resultado: " << result << endl;
+            //cout << result;// << endl;
+
+            cvReleaseImage(&img1);
+            cvReleaseImage(&img2);
+            cvReleaseImage(&img1C);
+            cvReleaseImage(&img2C);
+        }
     }
-    if(GRAPHIC)
-        Features::setGraphic(true);
 
-    double result = 1;
-    if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
-        result = ImageFuncs::resizeBasedRMS(img1C, img2C);
-
-    cout << "Resultado: " << result << endl;
-    //cout << result;// << endl;
-
-    cvReleaseImage(&img1);
-    cvReleaseImage(&img2);
-    cvReleaseImage(&img1C);
-    cvReleaseImage(&img2C);
-    */
 
     exit(0);
     return app.exec();

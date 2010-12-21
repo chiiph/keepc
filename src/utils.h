@@ -36,6 +36,8 @@ public:
      */
     static IplImage* loadImage(char* path, bool GRAYSCALE=false, bool QIMG=false);
 
+    static IplImage* loadImageNoExit(char* path, bool GRAYSCALE=false);
+
     /*!
      * Retorna una QImage (Qt) creada a partir de una IplImage (OpenCV).
      */
