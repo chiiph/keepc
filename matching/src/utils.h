@@ -34,7 +34,7 @@ public:
      * Puede determinarse si la imagen debe ser cargada en color (por defecto) o escala de grises,
      * y si debe utilizarse OpenCV (por defecto) o Qt para realizar la operación (utilizado para la carga de imágenes con formato GIF).
      */
-    static IplImage* loadImage(char* path, bool GRAYSCALE=false, bool QIMG=false);
+    static IplImage* loadImage(char* path, bool GRAYSCALE=false, bool QIMG=false); //QIMG deprecated
 
     static IplImage* loadImageNoExit(char* path, bool GRAYSCALE=false);
 

@@ -111,7 +111,7 @@ void Features::flannFindPairs(const CvSeq*, const CvSeq* objectDescriptors, cons
 
     //Encontrar "nearest neighbors" usando FLANN
     cv::Mat m_indices(objectDescriptors->total, 2, CV_32S);
-    cv::Mat m_dists(objectDescriptors->total, 2, CV_32F);
+    cv::Mat m_dists(objectDescriptors->total, 2, CV_32F);    
     cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4));  //Using 4 randomized kdtrees
     flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); //Maximum number of leafs checked
 

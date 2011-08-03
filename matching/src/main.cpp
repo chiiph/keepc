@@ -9,11 +9,13 @@
 #include "features.h"
 #include "utils.h"
 #include "imagehash.h"
+#include "cbir.h"
 
 using namespace std;
 
 bool VERBOSE = false;
 bool GRAPHIC = false;
+bool BUILD = false;
 bool ADD = false;
 bool SEARCH = false;
 
@@ -27,10 +29,12 @@ void printHelp()
     cout << "\t\tKeepcon imagen1 imagen2 [-v] [-g]" << endl << endl;
     cout << "\t\t-v: la aplicacion imprime datos sobre el procesamiento." << endl;
     cout << "\t\t-g: la aplicacion muestra la imagen de correspondencia hallada para las imagenes (en caso de ser posible)." << endl << endl;
-    cout << "\t\tLos argumentos pueden ser dispuestos en cualquier orden." << endl << endl;
-    cout << "\t- Para insertar una imagen en el hash:" << endl << endl;
+    cout << "\t\tLos argumentos pueden ser provistos en cualquier orden." << endl << endl;
+    cout << "\t- Para crear el indice a partir de un conjunto de imagenes:" << endl << endl;
+    cout << "\t\tKeepcon --build directorio/raiz/de/las/imagenes" << endl << endl;
+    cout << "\t- Para agregar una imagen en el indice:" << endl << endl;
     cout << "\t\tKeepcon --add imagen" << endl << endl;
-    cout << "\t- Para buscar por similitud en el hash:" << endl << endl;
+    cout << "\t- Para buscar las imagenes similares en el indice:" << endl << endl;
     cout << "\t\tKeepcon --search imagen" << endl << endl;
     cout << "\t- Para mostrar esta ayuda:" << endl << endl;
     cout << "\t\tKeepcon -h." << endl << endl;
@@ -50,36 +54,44 @@ void checkCall(int argc, char *argv[], QString &path1, QString &path2)
         qArgs << QString(argv[i]).toLower();
     if(qArgs.contains("-h"))
         printHelp();
-    if(qArgs.contains("--add")){
-        ADD = true;
-        qArgs.removeOne("--add");
+    if(qArgs.contains("--build")){
+        BUILD = true;
+        qArgs.removeOne("--build");
         if(qArgs.size() != 1)
             printHelp();
         path1 = qArgs[0];
     }else{
-        if(qArgs.contains("--search")){
-            SEARCH = true;
-            qArgs.removeOne("--search");
+        if(qArgs.contains("--add")){
+            ADD = true;
+            qArgs.removeOne("--add");
             if(qArgs.size() != 1)
                 printHelp();
             path1 = qArgs[0];
         }else{
-            for(int i=0; i<qArgs.size(); i++){
-                arg = qArgs[i];                
-                if(arg == "-v"){
-                    VERBOSE = true;
-                    qArgs.removeAt(i--);
-                    continue;
+            if(qArgs.contains("--search")){
+                SEARCH = true;
+                qArgs.removeOne("--search");
+                if(qArgs.size() != 1)
+                    printHelp();
+                path1 = qArgs[0];
+            }else{
+                for(int i=0; i<qArgs.size(); i++){
+                    arg = qArgs[i];
+                    if(arg == "-v"){
+                        VERBOSE = true;
+                        qArgs.removeAt(i--);
+                        continue;
+                    }
+                    if(arg == "-g"){
+                        GRAPHIC = true;
+                        qArgs.removeAt(i--);
+                    }
                 }
-                if(arg == "-g"){
-                    GRAPHIC = true;
-                    qArgs.removeAt(i--);
-                }
+                if(qArgs.size() != 2)
+                    printHelp();
+                path1 = qArgs[0];
+                path2 = qArgs[1];
             }
-            if(qArgs.size() != 2)
-                printHelp();
-            path1 = qArgs[0];
-            path2 = qArgs[1];
         }
     }
 }
@@ -103,7 +115,8 @@ int main(int argc, char *argv[])
     QStringList images;
     QString xml = "";
 
-    fileDirs << "auto" << "converse" << "doki" << "doki3" << "elmonito" << "flores" << "flores2" << "kitty" << "kitty2" << "lisa" << "lisa2" << "lisa3" << "lisakunfu" << "pelotas" << "perroygato" << "pocobeat" << "pocoyo" << "pocoyotel" << "remera";    for(int i=0; i<fileDirs.count(); i++){
+    fileDirs << "auto" << "converse" << "doki" << "doki3" << "elmonito" << "flores" << "flores2" << "kitty" << "kitty2" << "lisa" << "lisa2" << "lisa3" << "lisakunfu" << "pelotas" << "perroygato" << "pocobeat" << "pocoyo" << "pocoyotel" << "remera";
+    for(int i=0; i<fileDirs.count(); i++){
         QDir dir(root + fileDirs[i] + "/");
         dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
         dir.setSorting(QDir::Name | QDir::Reversed);
@@ -183,46 +196,56 @@ int main(int argc, char *argv[])
 
 
     //GENERAL
+
     IplImage *img1=NULL, *img2=NULL, *img1C=NULL, *img2C=NULL;
     QString path1, path2;
-    ImageHash hash = ImageHash();
+    //ImageHash hash = ImageHash();
 
     cout << endl;    
     checkCall(argc, argv, path1, path2);
 
-    if(ADD){
-        hash.featuresCountInsert(QString(path1));
+    if(BUILD){
+        CBIR cbir = CBIR();
+        cbir.buildIndex(path1);
+        cbir.query("../img/keepcon2/flores-d.jpg");
     }else{
-        if(SEARCH)
-            hash.featuresCountSearch(QString(path1));
-        else{
-            Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1, img2, true);
-            Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1C, img2C);           
-            if(VERBOSE){
-                cout << "Imagenes originales:" << endl;
-                cout << "Imagen 1: " << img1->width << " x " << img1->height << " (" << path1.toAscii().data() << ")" << endl;
-                cout << "Imagen 2: " << img2->width << " x " << img2->height << " (" << path2.toAscii().data() << ")" << endl << endl;
-                ImageFuncs::setVerbose(true);
-                Features::setVerbose(true);
-                Utils::setVerbose(true);
+        if(ADD){
+            CBIR cbir = CBIR();
+            cbir.addImage(path1);
+        }else{
+            if(SEARCH){
+                CBIR cbir = CBIR();
+                cbir.query(path1);
+            }else{
+                Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1, img2, true);
+                Utils::loadImages(path1.toAscii().data(), path2.toAscii().data(), img1C, img2C);
+                if(VERBOSE){
+                    cout << "Imagenes originales:" << endl;
+                    cout << "Imagen 1: " << img1->width << " x " << img1->height << " (" << path1.toAscii().data() << ")" << endl;
+                    cout << "Imagen 2: " << img2->width << " x " << img2->height << " (" << path2.toAscii().data() << ")" << endl << endl;
+                    ImageFuncs::setVerbose(true);
+                    Features::setVerbose(true);
+                    Utils::setVerbose(true);
+                }
+                if(GRAPHIC)
+                    Features::setGraphic(true);
+
+                double result = 1;
+                if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
+                    result = ImageFuncs::resizeBasedRMS(img1C, img2C);
+
+                cout << "Resultado: " << result << endl;
+                //cout << result;// << endl;
+
+                cvReleaseImage(&img1);
+                cvReleaseImage(&img2);
+                cvReleaseImage(&img1C);
+                cvReleaseImage(&img2C);
             }
-            if(GRAPHIC)
-                Features::setGraphic(true);
-
-            double result = 1;
-            if(!ImageFuncs::featuresBasedRMS(result, img1, img2, img1C, img2C))
-                result = ImageFuncs::resizeBasedRMS(img1C, img2C);
-
-            cout << "Resultado: " << result << endl;
-            //cout << result;// << endl;
-
-            cvReleaseImage(&img1);
-            cvReleaseImage(&img2);
-            cvReleaseImage(&img1C);
-            cvReleaseImage(&img2C);
         }
     }
 
+    //CBIR
 
     exit(0);
     return app.exec();
